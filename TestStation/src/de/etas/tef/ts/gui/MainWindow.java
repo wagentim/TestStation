@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 
 import de.etas.tef.ts.json.TestStation;
+import de.etas.tef.ts.listeners.ScanTypeSelectionListener;
 import de.etas.tef.ts.listeners.StationSelectionListener;
 import de.etas.tef.ts.scan.Driver;
 import de.etas.tef.ts.utils.IConstants;
@@ -50,6 +51,10 @@ public class MainWindow implements IActionListener
 	private Tree tree;
 	private Combo stationList;
 	private Combo scanTypeCombo;
+	private Button run;
+	
+	private static final int INFO_TABLE = 0x00;
+	private static final int INFO_TEXT = 0x01;
 	
 	public MainWindow(Display display, Controller controller)
 	{
@@ -151,12 +156,13 @@ public class MainWindow implements IActionListener
 		gd.heightHint = 25;
 		scanType.setLayoutData(gd);
 		
-		scanTypeCombo = new Combo(scanOptions, SWT.DROP_DOWN | SWT.BORDER);
+		scanTypeCombo = new Combo(scanOptions, SWT.DROP_DOWN | SWT.BORDER | SWT.READ_ONLY);
 		scanTypeCombo.add("");
-		scanTypeCombo.add("Test Program");
+		scanTypeCombo.add(IConstants.TXT_SCAN_TYPE_TEST_PROGRAM);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		scanTypeCombo.setLayoutData(gd);
 		scanTypeCombo.setEnabled(false);
+		scanTypeCombo.addSelectionListener(new ScanTypeSelectionListener());
 		
 		Label scanDisk = new Label(scanOptions, SWT.NONE);
 		fD = scanDisk.getFont().getFontData();
@@ -167,13 +173,13 @@ public class MainWindow implements IActionListener
 		gd.heightHint = 25;
 		scanDisk.setLayoutData(gd);
 		
-		diskCombo = new Combo(scanOptions, SWT.DROP_DOWN | SWT.BORDER);
+		diskCombo = new Combo(scanOptions, SWT.DROP_DOWN | SWT.BORDER | SWT.READ_ONLY);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.heightHint = 25;
 		diskCombo.setLayoutData(gd);
 		diskCombo.setEnabled(false);
 		
-		Button run = new Button(scanOptions, SWT.PUSH);
+		run = new Button(scanOptions, SWT.PUSH);
 		run.setImage(controller.getImage(IConstants.IMAGE_RUN));
 		run.setEnabled(false);
 	}
@@ -198,7 +204,7 @@ public class MainWindow implements IActionListener
 		gd.heightHint = 25;
 		station.setLayoutData(gd);
 		
-		stationList = new Combo(tsSelection, SWT.DROP_DOWN | SWT.BORDER);
+		stationList = new Combo(tsSelection, SWT.DROP_DOWN | SWT.BORDER | SWT.READ_ONLY);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		stationList.setLayoutData(gd);
 		
@@ -312,7 +318,7 @@ public class MainWindow implements IActionListener
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		mainComposite.setLayoutData(gd);
 		
-		sf = new SashForm(mainComposite, SWT.NONE); 
+		sf = new SashForm(mainComposite, SWT.HORIZONTAL); 
 		gd = new GridData(GridData.FILL_BOTH);
 		sf.setLayoutData(gd);
 		
@@ -469,7 +475,48 @@ public class MainWindow implements IActionListener
 			}
 			
 			updateStationName(ts.getName());
+			setScanTypeEnable(true);
 		}
+		else if( type == IConstants.EVENT_SCAN_TEST_PROGRAM_SELECTED)
+		{
+			setDiskDriversEnable(true);
+			setRunButtonEnable(true);
+		}
+	}
+
+	private void setRunButtonEnable(boolean b)
+	{
+		run.setEnabled(b);
+	}
+
+	private void setDiskDriversEnable(boolean b)
+	{
+		diskCombo.setEnabled(b);
+		diskCombo.removeAll();
+		swithInfoPane(INFO_TEXT);
+
+		if(b)
+		{
+			controller.updateDrivers();
+		}
+	}
+	
+	private void swithInfoPane(int index)
+	{
+		switch(index)
+		{
+			case INFO_TABLE:
+				sf.setWeights(new int[]{1, 0});
+				break;
+			case INFO_TEXT:
+				sf.setWeights(new int[]{0, 1});
+				break;
+		}
+	}
+
+	private void setScanTypeEnable(boolean b)
+	{
+		scanTypeCombo.setEnabled(b);
 	}
 
 	private void updateDrivers(List<Driver> content)

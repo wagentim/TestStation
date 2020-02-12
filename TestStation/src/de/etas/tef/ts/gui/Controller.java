@@ -58,7 +58,7 @@ public class Controller
 		return configure.getStationList();
 	}
 
-	private void updateDrivers()
+	public void updateDrivers()
 	{
 		DriveScanner ds = new DriveScanner();
 		List<Driver> drvs = ds.scan(null);

@@ -8,6 +8,7 @@ public interface IConstants
 	public static final String TXT_WINDOW_CLOSE_TITLE = "Exit the Program";
 	public static final String TXT_WINDOW_CLOSE_HINT = "Do you really want to exit the Program?";
 	public static final String TXT_UNKNOWN = "Unknown";
+	public static final String TXT_SCAN_TYPE_TEST_PROGRAM = "Test Program";
 
 	public static final Integer IMAGE_TITLE = 0x00;
 	public static final Integer IMAGE_EXIT = 0x01;
@@ -26,6 +27,7 @@ public interface IConstants
 	public static final int EVENT_UPDATE_IP = 0x01;
 	public static final int EVENT_UPDATE_DRIVERS = 0x02;
 	public static final int EVENT_STATION_SELECTED = 0x03;
+	public static final int EVENT_SCAN_TEST_PROGRAM_SELECTED = 0x04;
 	
 	public static final String SETTING_FILE = "./settings.json";
 	public static final String[] TEST_STATIONS = {
@@ -53,6 +55,7 @@ public interface IConstants
 		"regensburg",
 		"schauinsland",
 	};
+
 
 
 }
