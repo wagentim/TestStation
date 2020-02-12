@@ -1,0 +1,65 @@
+package de.etas.tef.ts.json;
+
+import java.util.Collections;
+import java.util.List;
+
+import de.etas.tef.ts.utils.IConstants;
+
+public final class TestStation
+{
+	private String name = IConstants.TXT_UNKNOWN;
+	private String pcName = IConstants.TXT_UNKNOWN;
+	private String ip = IConstants.TXT_UNKNOWN;
+	private List<ClusterTest> clusterTests = Collections.emptyList();
+	private List<FunctionTest> functionTests = Collections.emptyList();
+	private long lastScanTime = 0L;
+	
+	public String getName()
+	{
+		return name;
+	}
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	public String getPcName()
+	{
+		return pcName;
+	}
+	public void setPcName(String pcName)
+	{
+		this.pcName = pcName;
+	}
+	public String getIp()
+	{
+		return ip;
+	}
+	public void setIp(String ip)
+	{
+		this.ip = ip;
+	}
+	public List<ClusterTest> getClusterTests()
+	{
+		return clusterTests;
+	}
+	public void setClusterTests(List<ClusterTest> clusterTests)
+	{
+		this.clusterTests = clusterTests;
+	}
+	public List<FunctionTest> getFunctionTests()
+	{
+		return functionTests;
+	}
+	public void setFunctionTests(List<FunctionTest> functionTests)
+	{
+		this.functionTests = functionTests;
+	}
+	public long getLastScanTime()
+	{
+		return lastScanTime;
+	}
+	public void setLastScanTime(long lastScanTime)
+	{
+		this.lastScanTime = lastScanTime;
+	}
+}
