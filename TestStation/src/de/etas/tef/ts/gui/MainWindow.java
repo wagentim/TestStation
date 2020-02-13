@@ -6,7 +6,10 @@ import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Font;
@@ -27,10 +30,12 @@ import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 
+import de.etas.tef.ts.functions.AllTestStationScan;
+import de.etas.tef.ts.json.Driver;
 import de.etas.tef.ts.json.TestStation;
+import de.etas.tef.ts.listeners.DiskSelectionListener;
 import de.etas.tef.ts.listeners.ScanTypeSelectionListener;
 import de.etas.tef.ts.listeners.StationSelectionListener;
-import de.etas.tef.ts.scan.Driver;
 import de.etas.tef.ts.utils.IConstants;
 
 public class MainWindow implements IActionListener
@@ -161,14 +166,13 @@ public class MainWindow implements IActionListener
 		scanTypeCombo.add(IConstants.TXT_SCAN_TYPE_TEST_PROGRAM);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		scanTypeCombo.setLayoutData(gd);
-		scanTypeCombo.setEnabled(false);
 		scanTypeCombo.addSelectionListener(new ScanTypeSelectionListener());
 		
 		Label scanDisk = new Label(scanOptions, SWT.NONE);
 		fD = scanDisk.getFont().getFontData();
 		fD[0].setHeight(10);
 		scanDisk.setFont( new Font(display,fD[0]));
-		scanDisk.setText("Disk:");
+		scanDisk.setText("Scan Disk:");
 		gd = new GridData();
 		gd.heightHint = 25;
 		scanDisk.setLayoutData(gd);
@@ -178,10 +182,57 @@ public class MainWindow implements IActionListener
 		gd.heightHint = 25;
 		diskCombo.setLayoutData(gd);
 		diskCombo.setEnabled(false);
+		diskCombo.addSelectionListener(new DiskSelectionListener(controller));
 		
 		run = new Button(scanOptions, SWT.PUSH);
 		run.setImage(controller.getImage(IConstants.IMAGE_RUN));
 		run.setEnabled(false);
+		run.addSelectionListener(new SelectionListener()
+		{
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0)
+			{
+				// check if there is test station selected
+				
+				int index = stationList.getSelectionIndex();
+				
+				if( index == -1)
+				{
+					logInfo("Scan All Test Stations...");
+					runAllTestStationScan();
+				}
+				else
+				{
+					String selStation = stationList.getItem(stationList.getSelectionIndex());
+					if(selStation == null || selStation.equals(IConstants.EMPTY_STRING))
+					{
+						logInfo("Scan All Test Stations...");
+						runAllTestStationScan();
+						
+					}
+					else
+					{
+						logInfo("Scan Station: " + selStation);
+					}
+				}
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0)
+			{
+				
+			}
+		});
+	}
+	
+	private void runAllTestStationScan()
+	{
+		String drver = diskCombo.getItem(diskCombo.getSelectionIndex());
+		
+		@SuppressWarnings("unchecked")
+		Driver d = controller.findDriver(drver, (List<Driver>) diskCombo.getData());
+		new AllTestStationScan(d.getLetter(), display).run();
 	}
 	
 	private void initTSSelection(Composite topComposite)
@@ -314,11 +365,12 @@ public class MainWindow implements IActionListener
 		GridLayout layout = new GridLayout(1, false);
 		layout.marginTop = layout.marginLeft = layout.marginRight = layout.marginBottom = 0;
 		mainComposite.setLayout(layout);
+		mainComposite.setBackground(controller.getWhite());
 		
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		mainComposite.setLayoutData(gd);
 		
-		sf = new SashForm(mainComposite, SWT.HORIZONTAL); 
+		sf = new SashForm(mainComposite, SWT.VERTICAL); 
 		gd = new GridData(GridData.FILL_BOTH);
 		sf.setLayoutData(gd);
 		
@@ -326,7 +378,7 @@ public class MainWindow implements IActionListener
 				| SWT.FULL_SELECTION);
 		gd = new GridData(GridData.FILL_BOTH);
 		tree.setLayoutData(gd);
-		tree.setHeaderVisible(true);
+		tree.setHeaderVisible(false);
 		tree.setLinesVisible(true);
 		
 		txtInfoBlock = new StyledText(sf, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
@@ -429,27 +481,6 @@ public class MainWindow implements IActionListener
         statusLabel.setVisible(false);
 	}
 	
-//	private void switchInfoPanel()
-//	{
-//		isInfoPanelShow = !isInfoPanelShow;
-//		txtInfoBlock.setVisible(isInfoPanelShow);
-//		
-//		if(isInfoPanelShow)
-//		{
-//			main.setWeights(new int[]{ 5, 1 });
-//		}
-//		else
-//		{
-//			main.setWeights(new int[]{ 1, 0 });
-//		}
-//	}
-//	
-//	private void switchTextPanel()
-//	{
-//		isTextPanelShow = !isTextPanelShow;
-//		editComposite.setTextPanelVisible(isTextPanelShow);
-//	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public void receivedAction(int type, Object content)
@@ -477,10 +508,27 @@ public class MainWindow implements IActionListener
 			updateStationName(ts.getName());
 			setScanTypeEnable(true);
 		}
-		else if( type == IConstants.EVENT_SCAN_TEST_PROGRAM_SELECTED)
+		else if( type == IConstants.EVENT_SCAN_TYPE_TEST_PROGRAM_SELECTED)
 		{
+			logInfo("Scanning local Drivers...");
 			setDiskDriversEnable(true);
-			setRunButtonEnable(true);
+		}
+		else if( type == IConstants.MSG_INFO )
+		{
+			logInfo((String)content);
+		}
+		else if( type == IConstants.MSG_ERR )
+		{
+			logError((String)content);
+		}
+		else if( type == IConstants.EVENT_SCAN_TYPE_NULL_SELECTED)
+		{
+			setDiskDriversEnable(false);
+			setRunButtonEnable(false);
+		}
+		else if (type == IConstants.EVENT_DISK_SELECTED)
+		{
+			setRunButtonEnable(content == null ? false : true);
 		}
 	}
 
@@ -497,7 +545,16 @@ public class MainWindow implements IActionListener
 
 		if(b)
 		{
-			controller.updateDrivers();
+			display.asyncExec(new Runnable()
+			{
+				
+				@Override
+				public void run()
+				{
+					controller.updateDrivers();
+					logInfo("Scan local Drivers finished!");
+				}
+			});
 		}
 	}
 	
@@ -506,9 +563,13 @@ public class MainWindow implements IActionListener
 		switch(index)
 		{
 			case INFO_TABLE:
+				tree.setVisible(true);
+				txtInfoBlock.setVisible(false);
 				sf.setWeights(new int[]{1, 0});
 				break;
 			case INFO_TEXT:
+				tree.setVisible(false);
+				txtInfoBlock.setVisible(true);
 				sf.setWeights(new int[]{0, 1});
 				break;
 		}
@@ -522,6 +583,8 @@ public class MainWindow implements IActionListener
 	private void updateDrivers(List<Driver> content)
 	{
 		diskCombo.removeAll();
+		
+		diskCombo.add(IConstants.EMPTY_STRING);
 		
 		for(Driver d : content)
 		{
@@ -562,5 +625,38 @@ public class MainWindow implements IActionListener
 			content = IConstants.TXT_UNKNOWN;
 		}
 		tsName.setText(content);
+	}
+	
+	private void logError(String text)
+	{
+		String txt = "[" + sdf.format(new Date(System.currentTimeMillis())) + "]" + "[ERROR] " + text + "\n";
+
+		StyleRange sr = new StyleRange();
+		sr.start = txtInfoBlock.getText().length();
+		sr.length = txt.length();
+		sr.foreground = controller.getRed();
+		sr.fontStyle = SWT.ITALIC;
+		txtInfoBlock.append(txt);
+		txtInfoBlock.setStyleRange(sr);
+		moveToLastLine();
+	}
+
+	private void logInfo(String text)
+	{
+		String txt = "[" + sdf.format(new Date(System.currentTimeMillis())) + "]" + "[INFO] " + text + "\n";
+		
+		StyleRange sr = new StyleRange();
+		sr.start = txtInfoBlock.getText().length();
+		sr.length = txt.length();
+		sr.foreground = controller.getBlue();
+		sr.fontStyle = SWT.ITALIC;
+		txtInfoBlock.append(txt);
+		txtInfoBlock.setStyleRange(sr);
+		moveToLastLine();
+	}
+	
+	private void moveToLastLine()
+	{
+		txtInfoBlock.setTopIndex(txtInfoBlock.getLineCount());
 	}
 }

@@ -7,11 +7,11 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 
 import de.etas.tef.ts.json.Configure;
+import de.etas.tef.ts.json.Driver;
 import de.etas.tef.ts.json.TestStation;
-import de.etas.tef.ts.scan.DriveScanner;
-import de.etas.tef.ts.scan.Driver;
-import de.etas.tef.ts.scan.IPScanner;
-import de.etas.tef.ts.scan.PCNameScanner;
+import de.etas.tef.ts.scanner.DriveScanner;
+import de.etas.tef.ts.scanner.PCIPScanner;
+import de.etas.tef.ts.scanner.PCNameScanner;
 import de.etas.tef.ts.utils.IConstants;
 
 public class Controller
@@ -61,14 +61,14 @@ public class Controller
 	public void updateDrivers()
 	{
 		DriveScanner ds = new DriveScanner();
-		List<Driver> drvs = ds.scan(null);
+		List<Driver> drvs = ds.scan();
 		ActionManager.INSTANCE.sendAction(IConstants.EVENT_UPDATE_DRIVERS, drvs);
 	}
 
 	private void updateIP()
 	{
-		IPScanner scanner = new IPScanner();
-		String value = scanner.scan(null);
+		PCIPScanner scanner = new PCIPScanner();
+		String value = scanner.scan();
 		
 		ActionManager.INSTANCE.sendAction(IConstants.EVENT_UPDATE_IP, value);
 	}
@@ -76,10 +76,38 @@ public class Controller
 	private void updatePCName()
 	{
 		PCNameScanner scanner = new PCNameScanner();
-		String value = scanner.scan(null);
+		String value = scanner.scan();
 		
 		ActionManager.INSTANCE.sendAction(IConstants.EVENT_UPDATE_PC_NAME, value);
 	}
+
+	public Color getRed()
+	{
+		return colorPicker.getColorRed();
+	}
 	
+	public Driver findDriver(String name, List<Driver> drivers)
+	{
+		for(Driver d : drivers)
+		{
+			String n = d.getName();
+			
+			if(n == null || n.equals(IConstants.EMPTY_STRING))
+			{
+				String type = d.getType();
+				
+				if(name.contains(type))
+				{
+					return d;
+				}
+			}
+			else if (n.equals(name))
+			{
+				return d;
+			}
+		}
+		
+		return null;
+	}
 	
 }

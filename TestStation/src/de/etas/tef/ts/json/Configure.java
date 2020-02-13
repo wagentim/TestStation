@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -117,17 +116,6 @@ public final class Configure
 	private void createNewConfigFile()
 	{
 		this.setName(this.getName());
-		
-		stationList = new ArrayList<TestStation>();
-		
-		for(String s : IConstants.TEST_STATIONS)
-		{
-			s = String.valueOf(s.charAt(0)).toUpperCase() + s.substring(1);
-			TestStation ts = new TestStation();
-			ts.setName(s);
-			stationList.add(ts);
-		}
-		
 		this.writeJson();
 	}
 

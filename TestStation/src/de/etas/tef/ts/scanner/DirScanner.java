@@ -22,52 +22,61 @@ import de.etas.tef.ts.utils.IConstants;
 public class DirScanner extends AbstractScanner<List<Path>>
 {
 	private static final Logger logger = LoggerFactory.getLogger(DirScanner.class);
-	private String startDir = IConstants.EMPTY_STRING;
+	private Path startDir = null;
 	
 	public DirScanner()
 	{
 		this(IConstants.EMPTY_STRING);
 	}
 	
+	public DirScanner(final Path startDir)
+	{
+		this.startDir = startDir;
+	}
+	
 	public DirScanner(final String startDir)
 	{
-		this.startDir = startDir;
+		this.startDir = createPath(startDir);
 	}
 	
-	public void setStartDir(final String startDir)
+	public DirScanner setStartDir(final String startDir)
 	{
-		this.startDir = startDir;
+		this.startDir = createPath(startDir);
+		return this;
 	}
 	
-	public List<Path> scan()
+	public DirScanner setStartDir(final Path startDir)
 	{
-		if(startDir == null || startDir.isEmpty())
+		this.startDir = startDir;
+		return this;
+	}
+	
+	private Path createPath(final String input)
+	{
+		return FileSystems.getDefault().getPath(input);
+	}
+	
+	@Override
+	protected List<Path> scan()
+	{
+		if(startDir == null)
 		{
 			logger.error("Input is wrong: %1", startDir);
 			return Collections.emptyList();
 		}
-		else
-		{
-			return scanDir();
-		}
-	}
-	
-	private List<Path> scanDir()
-	{
-		Path path = FileSystems.getDefault().getPath(startDir);			
 		
-		if(!path.isAbsolute())
+		if(!startDir.isAbsolute())
 		{
-			path = path.normalize().toAbsolutePath();
+			startDir = startDir.normalize().toAbsolutePath();
 		}
 		
-		boolean exist = Files.exists(path);
+		boolean exist = Files.exists(startDir);
 		
-		if(exist && Files.isDirectory(path))
+		if(exist && Files.isDirectory(startDir))
 		{
 			List<Path> result = new ArrayList<Path>();
 			
-			try(DirectoryStream<Path> dirStreams = Files.newDirectoryStream(path))
+			try(DirectoryStream<Path> dirStreams = Files.newDirectoryStream(startDir))
 			{
 				for(Path p : dirStreams)
 				{

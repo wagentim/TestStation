@@ -25,7 +25,11 @@ public class ScanTypeSelectionListener implements SelectionListener
 		
 		if(txtScanType.equals(IConstants.TXT_SCAN_TYPE_TEST_PROGRAM))
 		{
-			ActionManager.INSTANCE.sendAction(IConstants.EVENT_SCAN_TEST_PROGRAM_SELECTED, IConstants.EMPTY_STRING);
+			ActionManager.INSTANCE.sendAction(IConstants.EVENT_SCAN_TYPE_TEST_PROGRAM_SELECTED, IConstants.EMPTY_STRING);
+		}
+		else
+		{
+			ActionManager.INSTANCE.sendAction(IConstants.EVENT_SCAN_TYPE_NULL_SELECTED, IConstants.EMPTY_STRING);
 		}
 	}
 	

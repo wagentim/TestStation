@@ -1,4 +1,4 @@
-package de.etas.tef.ts.scan;
+package de.etas.tef.ts.json;
 
 import de.etas.tef.ts.utils.IConstants;
 

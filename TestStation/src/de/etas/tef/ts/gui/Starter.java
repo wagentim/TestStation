@@ -9,7 +9,7 @@ public class Starter
 	{
 		Display display = new Display();
 		Controller controller = new Controller(display);
-		boolean success = controller.loadConfigure();
+		controller.loadConfigure();
 		new MainWindow(display, controller);
 	}
 }
