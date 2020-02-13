@@ -25,7 +25,7 @@ public class FindValidDirFilter implements IFilter<List<Path>>
 				continue;
 			}
 			
-			if( p.getFileName().equals(VALID_DIR))
+			if( p.getFileName().toString().equalsIgnoreCase(VALID_DIR))
 			{
 				result.add(p);
 			}

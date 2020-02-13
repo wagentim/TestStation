@@ -25,7 +25,7 @@ public class FindATEToolsDirFilter implements IFilter<List<Path>>
 				continue;
 			}
 			
-			if( p.getFileName().equals(ATE_TOOLS_DIR))
+			if( p.getFileName().toString().equalsIgnoreCase(ATE_TOOLS_DIR))
 			{
 				result.add(p);
 			}
