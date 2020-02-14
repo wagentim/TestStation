@@ -7,6 +7,7 @@ import de.etas.tef.ts.filter.FindATEToolsDirFilter;
 import de.etas.tef.ts.gui.ActionManager;
 import de.etas.tef.ts.json.TestStation;
 import de.etas.tef.ts.scanner.DirScanner;
+import de.etas.tef.ts.scanner.TestProgramScanner;
 import de.etas.tef.ts.utils.IConstants;
 
 public class SingleTestStationScan implements Runnable
@@ -43,7 +44,6 @@ public class SingleTestStationScan implements Runnable
 	@Override
 	public void run()
 	{
-		ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO, "Scan Test Program in Location: " + startDir.toString());
 		
 		Path ateDir = findATEToolsDir();
 		
@@ -51,6 +51,12 @@ public class SingleTestStationScan implements Runnable
 		{
 			ActionManager.INSTANCE.sendAction(IConstants.MSG_ERR, "Cannot find 'ATE-Tools' Directory in: " + startDir.toString());
 			return;
+		}
+		else
+		{
+			ActionManager.INSTANCE.sendAction(IConstants.MSG_GREEN, "Scan Test Program in Location: " + ateDir.toString());
+			TestProgramScanner tpScanner = new TestProgramScanner(ateDir);
+			tpScanner.run();
 		}
 		
 		

@@ -521,6 +521,14 @@ public class MainWindow implements IActionListener
 		{
 			logError((String)content);
 		}
+		else if( type == IConstants.MSG_GREEN )
+		{
+			logGreen((String)content);
+		}
+		else if( type == IConstants.MSG_GREY )
+		{
+			logGrey((String)content);
+		}
 		else if( type == IConstants.EVENT_SCAN_TYPE_NULL_SELECTED)
 		{
 			setDiskDriversEnable(false);
@@ -530,6 +538,20 @@ public class MainWindow implements IActionListener
 		{
 			setRunButtonEnable(content == null ? false : true);
 		}
+	}
+
+	private void logGreen(String text)
+	{
+		String txt = "[" + sdf.format(new Date(System.currentTimeMillis())) + "]" + "[INFO] " + text + "\n";
+
+		StyleRange sr = new StyleRange();
+		sr.start = txtInfoBlock.getText().length();
+		sr.length = txt.length();
+		sr.foreground = controller.getGreen();
+		sr.fontStyle = SWT.NORMAL;
+		txtInfoBlock.append(txt);
+		txtInfoBlock.setStyleRange(sr);
+		moveToLastLine();
 	}
 
 	private void setRunButtonEnable(boolean b)
@@ -635,7 +657,7 @@ public class MainWindow implements IActionListener
 		sr.start = txtInfoBlock.getText().length();
 		sr.length = txt.length();
 		sr.foreground = controller.getRed();
-		sr.fontStyle = SWT.ITALIC;
+		sr.fontStyle = SWT.NORMAL;
 		txtInfoBlock.append(txt);
 		txtInfoBlock.setStyleRange(sr);
 		moveToLastLine();
@@ -649,7 +671,21 @@ public class MainWindow implements IActionListener
 		sr.start = txtInfoBlock.getText().length();
 		sr.length = txt.length();
 		sr.foreground = controller.getBlue();
-		sr.fontStyle = SWT.ITALIC;
+		sr.fontStyle = SWT.NORMAL;
+		txtInfoBlock.append(txt);
+		txtInfoBlock.setStyleRange(sr);
+		moveToLastLine();
+	}
+	
+	private void logGrey(String text)
+	{
+		String txt = "[" + sdf.format(new Date(System.currentTimeMillis())) + "]" + "[INFO] " + text + "\n";
+		
+		StyleRange sr = new StyleRange();
+		sr.start = txtInfoBlock.getText().length();
+		sr.length = txt.length();
+		sr.foreground = controller.getGray();
+		sr.fontStyle = SWT.NORMAL;
 		txtInfoBlock.append(txt);
 		txtInfoBlock.setStyleRange(sr);
 		moveToLastLine();

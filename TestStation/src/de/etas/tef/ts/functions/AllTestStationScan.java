@@ -46,7 +46,8 @@ public class AllTestStationScan implements Runnable
 			
 			if(validDirPath != null)
 			{
-				display.asyncExec(new SingleTestStationScan(validDirPath, p.getFileName().toString(), false));
+				SingleTestStationScan sts = new SingleTestStationScan(validDirPath, p.getFileName().toString(), false);
+				sts.run();
 			}
 			else
 			{

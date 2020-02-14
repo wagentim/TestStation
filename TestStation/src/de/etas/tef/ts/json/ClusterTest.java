@@ -1,6 +1,6 @@
 package de.etas.tef.ts.json;
 
-public class ClusterTest implements ITestProgram
+public class ClusterTest extends AbstractTestProgram
 {
 	
 }

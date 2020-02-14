@@ -109,5 +109,15 @@ public class Controller
 		
 		return null;
 	}
+
+	public Color getGreen()
+	{
+		return colorPicker.getColorDarkGreen();
+	}
+	
+	public Color getGray()
+	{
+		return colorPicker.getColorGray();
+	}
 	
 }

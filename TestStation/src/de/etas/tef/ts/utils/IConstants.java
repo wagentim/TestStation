@@ -32,6 +32,8 @@ public interface IConstants
 	public static final int EVENT_DISK_SELECTED = 0x06;
 	public static final int MSG_ERR = 0x07;
 	public static final int MSG_INFO = 0x08;
+	public static final int MSG_GREEN = 0x09;
+	public static final int MSG_GREY = 0x10;
 	
 	public static final String SETTING_FILE = "./settings.json";
 	public static final String[] TEST_STATIONS = {
@@ -59,6 +61,8 @@ public interface IConstants
 		"regensburg",
 		"schauinsland",
 	};
+
+
 
 
 
