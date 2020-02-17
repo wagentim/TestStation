@@ -1,6 +1,7 @@
 package de.etas.tef.ts.gui;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
 
@@ -54,22 +55,21 @@ public class GUITreeNodeHandler implements IActionListener
 	private void createTestStationDetail(TestStation ts, TreeItem ti)
 	{
 		
-		List<ClusterTest> ctList = ts.getClusterTests();
+		ClusterTest ct = ts.getClusterTest();
 		
-		if(ctList != null && !ctList.isEmpty())
+		if(ct != null)
 		{
 			TreeItem t = new TreeItem(ti, SWT.NONE);
 			t.setText("Cluster Test");
-			t.setData(ctList.get(0));
-			createProjectNode(ctList.get(0), t);
+			t.setData(ct);
+			createProjectNode(ct, t);
 		}
 		
-		List<FunctionTest> ftList = ts.getFunctionTests();
-		if(ftList != null && !ftList.isEmpty())
+		FunctionTest ft = ts.getFunctionTest();
+		if(ft != null)
 		{
 			TreeItem t = new TreeItem(ti, SWT.NONE);
 			t.setText("Function Test");
-			FunctionTest ft = ftList.get(0);
 			t.setData(ft);
 			createProjectNode(ft, t);
 		}
@@ -98,7 +98,7 @@ public class GUITreeNodeHandler implements IActionListener
 			}
 			
 			TreeItem ti = new TreeItem(t, SWT.NONE);
-			ti.setText(p.getPath().getFileName().toString());
+			ti.setText(Paths.get(p.getPath()).getFileName().toString());
 			ti.setData(p);
 			
 			List<Test> tests = p.getTests();
@@ -115,27 +115,27 @@ public class GUITreeNodeHandler implements IActionListener
 				{
 					Test tst = itTest.next();
 					
-					Path path = tst.getParentDir();
+					Path path = Paths.get(tst.getParentDir());
 					TreeItem tItem = new TreeItem(ti, SWT.NONE);
 					
 					if(path == null)
 					{
-						path = tst.getFile();
+						path = Paths.get(tst.getPath());
 						if(path == null)
 						{
 							tItem.setText("NOT FOUND");
 						}
 						else
 						{
-							tItem.setText(tst.getFile().getFileName().toString());
+							tItem.setText(Paths.get(tst.getPath()).getFileName().toString());
 						}
 					}
 					else
 					{
-						tItem.setText(tst.getParentDir().getFileName().toString());
+						tItem.setText(Paths.get(tst.getParentDir()).getFileName().toString());
 						TreeItem tIt = new TreeItem(tItem, SWT.NONE);
 						
-						path = tst.getFile();
+						path = Paths.get(tst.getPath());
 						
 						if(path == null)
 						{
@@ -143,7 +143,7 @@ public class GUITreeNodeHandler implements IActionListener
 						}
 						else
 						{
-							tIt.setText(tst.getFile().getFileName().toString());
+							tIt.setText(Paths.get(tst.getPath()).getFileName().toString());
 						}
 					}
 					

@@ -11,20 +11,16 @@ import de.etas.tef.ts.utils.IConstants;
 
 public class SingleTestStationScan implements Runnable
 {
-	private final Path startDir;
-	private final String stationName;
-	private final boolean scanLocalInfo;
+	private final String startDir;
 	private final DirScanner dirScanner;
 	private final TestStation ts;
 	
-	public SingleTestStationScan(final Path startDir, final String stationName, final boolean scanLocalInfo)
+	public SingleTestStationScan(final String startDir)
 	{
 		this.startDir = startDir;
-		this.stationName = stationName;
-		this.scanLocalInfo = scanLocalInfo;
 		dirScanner = new DirScanner(startDir);
 		ts = new TestStation();
-		ts.setName(stationName);
+		ts.setName(dirScanner.getStartPath().getFileName().toString());
 	}
 	
 	public TestStation getTestStation()
@@ -58,7 +54,7 @@ public class SingleTestStationScan implements Runnable
 		}
 		else
 		{
-			ActionManager.INSTANCE.sendAction(IConstants.MSG_GREEN, "Scan Test Program in Location: " + ateDir.toString());
+//			ActionManager.INSTANCE.sendAction(IConstants.MSG_GREEN, "Scan Test Program in Location: " + ateDir.toString());
 			TestProgramScanner tpScanner = new TestProgramScanner(ateDir, ts);
 			tpScanner.run();
 		}

@@ -39,6 +39,11 @@ public class DirScanner extends AbstractScanner<List<Path>>
 		this.startDir = createPath(startDir);
 	}
 	
+	public Path getStartPath()
+	{
+		return this.startDir;
+	}
+	
 	public DirScanner setStartDir(final String startDir)
 	{
 		this.startDir = createPath(startDir);

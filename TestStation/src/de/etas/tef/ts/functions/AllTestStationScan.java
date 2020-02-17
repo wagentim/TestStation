@@ -6,8 +6,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.swt.widgets.Display;
-
 import de.etas.tef.ts.filter.FindValidDirFilter;
 import de.etas.tef.ts.filter.TestStationNameFilter;
 import de.etas.tef.ts.json.TestStation;
@@ -21,7 +19,7 @@ public class AllTestStationScan implements Runnable
 	private List<Path> stations = Collections.emptyList();
 	private List<TestStation> tstations;
 	
-	public AllTestStationScan(final String startDir, final Display display)
+	public AllTestStationScan(final String startDir)
 	{
 		this.startDir = startDir;
 		this.dirScanner = new DirScanner();
@@ -39,7 +37,7 @@ public class AllTestStationScan implements Runnable
 			return;
 		}
 		
-		ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO, "Find Total: " + stations.size() + " Stations.");
+//		ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO, "Find Total: " + stations.size() + " Stations.");
 		
 		for(Path p : stations)
 		{
@@ -47,7 +45,7 @@ public class AllTestStationScan implements Runnable
 			
 			if(validDirPath != null)
 			{
-				SingleTestStationScan sts = new SingleTestStationScan(validDirPath, p.getFileName().toString(), false);
+				SingleTestStationScan sts = new SingleTestStationScan(validDirPath.toString());
 				sts.run();
 				tstations.add(sts.getTestStation());
 			}

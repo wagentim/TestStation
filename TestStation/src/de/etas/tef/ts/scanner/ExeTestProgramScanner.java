@@ -83,8 +83,8 @@ public class ExeTestProgramScanner extends AbstractScanner<Test>
 				
 				if(!Files.isDirectory(p) && (s = p.getFileName().toString().toLowerCase()).endsWith(".exe") && s.startsWith("es"))
 				{
-					test.setParentDir(startDir);
-					test.setFile(p);
+					test.setParentDir(startDir.toString());
+					test.setPath(p.toString());
 				}
 			}
 			

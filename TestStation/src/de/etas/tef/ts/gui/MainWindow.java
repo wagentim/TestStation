@@ -60,6 +60,9 @@ public class MainWindow implements IActionListener
 	private static final int INFO_TABLE = 0x00;
 	private static final int INFO_TEXT = 0x01;
 	
+	private GUITreeNodeHandler treeNodeHandler;
+	private InfoBlockWriter writer;
+	
 	public MainWindow(Display display, Controller controller)
 	{
 		ActionManager.INSTANCE.addActionListener(this);
@@ -185,8 +188,7 @@ public class MainWindow implements IActionListener
 		run = new Button(scanOptions, SWT.PUSH);
 		run.setImage(controller.getImage(IConstants.IMAGE_RUN));
 		run.setEnabled(false);
-		runSelectionListener = new RunSelectionListener(controller);
-		run.addSelectionListener(runSelectionListener);
+		run.addSelectionListener(new RunSelectionListener(controller));
 	}
 	
 	private void initTSSelection(Composite topComposite)

@@ -11,16 +11,17 @@ import de.etas.tef.ts.json.Configure;
 import de.etas.tef.ts.json.Driver;
 import de.etas.tef.ts.json.TestStation;
 import de.etas.tef.ts.scanner.DriveScanner;
-import de.etas.tef.ts.scanner.PCIPScanner;
-import de.etas.tef.ts.scanner.PCNameScanner;
 import de.etas.tef.ts.utils.IConstants;
 
-public class Controller
+public class Controller implements IActionListener
 {
 	private final ImageRegister imageRegister;
 	private final ColorPicker colorPicker;
 	private Configure configure = null;
 	private final ConditionValidator validator;
+	private String scanType = IConstants.EMPTY_STRING;
+	private Driver selectedDriver = null;
+	private TestStation ts = null;
 	
 	public Controller(final Display display)
 	{
@@ -68,21 +69,21 @@ public class Controller
 		ActionManager.INSTANCE.sendAction(IConstants.EVENT_UPDATE_DRIVERS, drvs);
 	}
 
-	private void updateIP()
-	{
-		PCIPScanner scanner = new PCIPScanner();
-		String value = scanner.scan();
-		
-		ActionManager.INSTANCE.sendAction(IConstants.EVENT_UPDATE_IP, value);
-	}
-
-	private void updatePCName()
-	{
-		PCNameScanner scanner = new PCNameScanner();
-		String value = scanner.scan();
-		
-		ActionManager.INSTANCE.sendAction(IConstants.EVENT_UPDATE_PC_NAME, value);
-	}
+//	private void updateIP()
+//	{
+//		PCIPScanner scanner = new PCIPScanner();
+//		String value = scanner.scan();
+//		
+//		ActionManager.INSTANCE.sendAction(IConstants.EVENT_UPDATE_IP, value);
+//	}
+//
+//	private void updatePCName()
+//	{
+//		PCNameScanner scanner = new PCNameScanner();
+//		String value = scanner.scan();
+//		
+//		ActionManager.INSTANCE.sendAction(IConstants.EVENT_UPDATE_PC_NAME, value);
+//	}
 
 	public Color getRed()
 	{
@@ -99,6 +100,36 @@ public class Controller
 	public Color getGray()
 	{
 		return colorPicker.getColorGray();
+	}
+
+	public void scanTestProgram()
+	{
+		switch(validator.validateScanModel(ts == null ? IConstants.EMPTY_STRING : ts.getName(), scanType, selectedDriver == null ? IConstants.EMPTY_STRING : selectedDriver.getLetter()))
+		{
+			case ConditionValidator.ALL_TEST_STATION_SCAN:
+				new AllTestStationScan(selectedDriver.getLetter()).run();
+				break;
+			case ConditionValidator.SINGLE_TEST_STATION_SCAN:
+				new SingleTestStationScan(selectedDriver.getLetter()).run();
+				break;
+		}
+	}
+
+	@Override
+	public void receivedAction(int type, Object content)
+	{
+		if(type == IConstants.EVENT_SCAN_TYPE_CHANGED)
+		{
+			scanType = content.toString();
+		}
+		else if(type == IConstants.EVENT_DISK_SELECTED)
+		{
+			selectedDriver = (Driver)content;
+		}
+		else if(type == IConstants.EVENT_STATION_SELECTED)
+		{
+			ts = (TestStation)content;
+		}
 	}
 	
 }

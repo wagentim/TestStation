@@ -1,6 +1,7 @@
 package de.etas.tef.ts.scanner;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
 
@@ -56,9 +57,9 @@ public class TestProgramScanner implements Runnable
 			if( ctPath != null )
 			{
 				ct = new ClusterTest();
-				ct.setPath(ctPath);
-				ts.addClusterTest(ct);
-				ActionManager.INSTANCE.sendAction(IConstants.MSG_GREY, "Scan Cluster Test......");
+				ct.setPath(ctPath.toString());
+				ts.setClusterTest(ct);
+//				ActionManager.INSTANCE.sendAction(IConstants.MSG_GREY, "Scan Cluster Test......");
 				scanProjects(ctPath, ct);
 			}
 		}
@@ -73,9 +74,9 @@ public class TestProgramScanner implements Runnable
 			if( ftPath != null )
 			{
 				ft = new FunctionTest();
-				ft.setPath(ftPath);
-				ts.addFunctionTest(ft);
-				ActionManager.INSTANCE.sendAction(IConstants.MSG_GREY, "Scan Function Test......");
+				ft.setPath(ftPath.toString());
+				ts.setFunctionTest(ft);
+//				ActionManager.INSTANCE.sendAction(IConstants.MSG_GREY, "Scan Function Test......");
 				scanProjects(ftPath, ft);
 			}
 		}
@@ -102,19 +103,19 @@ public class TestProgramScanner implements Runnable
 			}
 			
 			Project prj = new Project();
-			prj.setPath(p);
+			prj.setPath(p.toString());
 			atp.addProject(prj);
 			i++;
 			scanTests(prj);
-			ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO, "Project: " + p.getFileName().toString());
+//			ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO, "Project: " + p.getFileName().toString());
 		}
 		
-		ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO, "Total: " + i);
+//		ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO, "Total: " + i);
 	}
 	
 	private void scanTests(Project project)
 	{
-		Path startDir = project.getPath();
+		Path startDir = Paths.get(project.getPath());
 		
 		dirScanner.removeAllFilters();
 		dirScanner.setStartDir(startDir);
@@ -125,14 +126,14 @@ public class TestProgramScanner implements Runnable
 			Test test = new Test();
 			exeScanner.removeAllFilters();
 			exeScanner.setStartDir(startDir).setTest(test).startScanning();
-			ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO, "Path: " + startDir.toString());
-			if( test.getFile() == null)
+//			ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO, "Path: " + startDir.toString());
+			if( Paths.get(test.getPath()) == null)
 			{
 				ActionManager.INSTANCE.sendAction(IConstants.MSG_ERR, "NO EXE File found!");
 			}
 			else
 			{
-				ActionManager.INSTANCE.sendAction(IConstants.MSG_GREEN, "Test: " + test.getFile().getFileName().toString());
+//				ActionManager.INSTANCE.sendAction(IConstants.MSG_GREEN, "Test: " + test.getFile().getFileName().toString());
 			}
 			project.addTest(test);
 		}
@@ -147,15 +148,15 @@ public class TestProgramScanner implements Runnable
 				Test test = new Test();
 				exeScanner.removeAllFilters();
 				exeScanner.setStartDir(p).setTest(test).startScanning();
-				ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO, "Path: " + p.toString());
+//				ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO, "Path: " + p.toString());
 				
-				if( test.getFile() == null)
+				if( Paths.get(test.getPath()) == null)
 				{
 					ActionManager.INSTANCE.sendAction(IConstants.MSG_ERR, "NO EXE File found!");
 				}
 				else
 				{
-					ActionManager.INSTANCE.sendAction(IConstants.MSG_GREEN, "Test: " + test.getFile().getFileName().toString());
+//					ActionManager.INSTANCE.sendAction(IConstants.MSG_GREEN, "Test: " + test.getFile().getFileName().toString());
 				}
 				project.addTest(test);
 			}

@@ -8,12 +8,7 @@ public final class ConditionValidator
 	public static final int SINGLE_TEST_STATION_SCAN = 0x01;
 	public static final int ALL_TEST_STATION_SCAN = 0x02;
 	
-	private String selectedTestStation = IConstants.EMPTY_STRING;
-	private String selectedScanType = IConstants.EMPTY_STRING;
-	private String selectedDriver = IConstants.EMPTY_STRING;
-	
-	
-	public int validate()
+	public int validateScanModel(String selectedTestStation, String selectedScanType, String selectedDriver)
 	{
 		if(!selectedTestStation.equals(IConstants.EMPTY_STRING) &&
 				!selectedDriver.equals(IConstants.EMPTY_STRING) &&
@@ -29,42 +24,6 @@ public final class ConditionValidator
 		}
 		
 		return UNKNOWN;
-	}
-
-
-	public String getSelectedTestStation()
-	{
-		return selectedTestStation;
-	}
-
-
-	public void setSelectedTestStation(String selectedTestStation)
-	{
-		this.selectedTestStation = selectedTestStation;
-	}
-
-
-	public String getSelectedScanType()
-	{
-		return selectedScanType;
-	}
-
-
-	public void setSelectedScanType(String selectedScanType)
-	{
-		this.selectedScanType = selectedScanType;
-	}
-
-
-	public String getSelectedDriver()
-	{
-		return selectedDriver;
-	}
-
-
-	public void setSelectedDriver(String selectedDriver)
-	{
-		this.selectedDriver = selectedDriver;
 	}
 	
 }
