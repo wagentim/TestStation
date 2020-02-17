@@ -1,36 +1,29 @@
 package de.etas.tef.ts.json;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Project
+public class Project extends AbstractFile
 {
-	private final List<Test> tests;
-	private Path path = null;
+	private List<Test> tests;
 	
 	public Project()
 	{
 		tests = new ArrayList<Test>();
 	}
 	
-	public Path getPath()
-	{
-		return path;
-	}
-
-	public void setPath(Path path)
-	{
-		this.path = path;
-	}
-	
 	public void addTest(final Test test)
 	{
 		tests.add(test);
 	}
-	
+
 	public List<Test> getTests()
 	{
 		return tests;
+	}
+
+	public void setTests(List<Test> tests)
+	{
+		this.tests = tests;
 	}
 }

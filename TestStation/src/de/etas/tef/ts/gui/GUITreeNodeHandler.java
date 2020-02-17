@@ -8,6 +8,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
+import de.etas.tef.ts.functions.ActionManager;
 import de.etas.tef.ts.functions.IActionListener;
 import de.etas.tef.ts.json.AbstractTestProgram;
 import de.etas.tef.ts.json.ClusterTest;
@@ -15,6 +16,7 @@ import de.etas.tef.ts.json.FunctionTest;
 import de.etas.tef.ts.json.Project;
 import de.etas.tef.ts.json.Test;
 import de.etas.tef.ts.json.TestStation;
+import de.etas.tef.ts.utils.IConstants;
 
 public class GUITreeNodeHandler implements IActionListener
 {
@@ -37,51 +39,67 @@ public class GUITreeNodeHandler implements IActionListener
 			
 			if(ts == null)
 			{
+				ActionManager.INSTANCE.sendAction(IConstants.MSG_ERR, "Test Station is NULL");
 				continue;
 			}
 			
 			TreeItem ti = new TreeItem(tree, SWT.NONE);
 			ti.setText(ts.getName());
+			ti.setData(ts);
 			
-			createTestStation(ts, ti);
+			createTestStationDetail(ts, ti);
 		}
 	}
 	
-	private void createTestStation(TestStation ts, TreeItem ti)
+	private void createTestStationDetail(TestStation ts, TreeItem ti)
 	{
-		Iterator<ClusterTest> itCluster = ts.getClusterTests().iterator();
 		
-		while(itCluster.hasNext())
+		List<ClusterTest> ctList = ts.getClusterTests();
+		
+		if(ctList != null && !ctList.isEmpty())
 		{
-			ClusterTest ct = itCluster.next();
 			TreeItem t = new TreeItem(ti, SWT.NONE);
 			t.setText("Cluster Test");
-			
-			createProjectNode(ct, t);
+			t.setData(ctList.get(0));
+			createProjectNode(ctList.get(0), t);
 		}
 		
-		Iterator<FunctionTest> itFunction = ts.getFunctionTests().iterator();
-		
-		while(itFunction.hasNext())
+		List<FunctionTest> ftList = ts.getFunctionTests();
+		if(ftList != null && !ftList.isEmpty())
 		{
-			FunctionTest ft = itFunction.next();
 			TreeItem t = new TreeItem(ti, SWT.NONE);
 			t.setText("Function Test");
-			
+			FunctionTest ft = ftList.get(0);
+			t.setData(ft);
 			createProjectNode(ft, t);
 		}
 	}
 
 	private void createProjectNode(AbstractTestProgram ct, TreeItem t)
 	{
+		List<Project> prjs = ct.getProjects();
+		
+		if(prjs == null || prjs.isEmpty())
+		{
+			ActionManager.INSTANCE.sendAction(IConstants.MSG_ERR, "Project List is NULL or Empty in Test: " + ct.getPath().toString());
+			return;
+		}
+		
 		Iterator<Project> it = ct.getProjects().iterator();
 		
 		while(it.hasNext())
 		{
 			Project p = it.next();
 			
+			if(p == null)
+			{
+				ActionManager.INSTANCE.sendAction(IConstants.MSG_ERR, "Project is NULL: " + ct.getPath().toString());
+				continue;
+			}
+			
 			TreeItem ti = new TreeItem(t, SWT.NONE);
 			ti.setText(p.getPath().getFileName().toString());
+			ti.setData(p);
 			
 			List<Test> tests = p.getTests();
 			
@@ -98,36 +116,34 @@ public class GUITreeNodeHandler implements IActionListener
 					Test tst = itTest.next();
 					
 					Path path = tst.getParentDir();
-					ti = new TreeItem(ti, SWT.NONE);
+					TreeItem tItem = new TreeItem(ti, SWT.NONE);
 					
 					if(path == null)
 					{
-						
 						path = tst.getFile();
-						
 						if(path == null)
 						{
-							ti.setText("NOT FOUND");
+							tItem.setText("NOT FOUND");
 						}
 						else
 						{
-							ti.setText(tst.getFile().getFileName().toString());
+							tItem.setText(tst.getFile().getFileName().toString());
 						}
 					}
 					else
 					{
-						ti.setText(tst.getParentDir().getFileName().toString());
-						ti = new TreeItem(ti, SWT.NONE);
+						tItem.setText(tst.getParentDir().getFileName().toString());
+						TreeItem tIt = new TreeItem(tItem, SWT.NONE);
 						
 						path = tst.getFile();
 						
 						if(path == null)
 						{
-							ti.setText("NOT FOUND");
+							tIt.setText("NOT FOUND");
 						}
 						else
 						{
-							ti.setText(tst.getFile().getFileName().toString());
+							tIt.setText(tst.getFile().getFileName().toString());
 						}
 					}
 					

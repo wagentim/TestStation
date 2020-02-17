@@ -120,4 +120,9 @@ public class Controller
 		return colorPicker.getColorGray();
 	}
 	
+	public void setTestStationList(List<TestStation> stationList)
+	{
+		configure.setStationList(stationList);
+//		configure.writeJson();
+	}
 }

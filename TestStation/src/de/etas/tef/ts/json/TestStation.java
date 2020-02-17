@@ -1,18 +1,15 @@
 package de.etas.tef.ts.json;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.etas.tef.ts.utils.IConstants;
 
-public final class TestStation
+public final class TestStation extends AbstractFile
 {
 	private String name = IConstants.TXT_UNKNOWN;
 	private String pcName = IConstants.TXT_UNKNOWN;
 	private String ip = IConstants.TXT_UNKNOWN;
-	private List<ClusterTest> clusterTests = null;
-	private List<FunctionTest> functionTests = null;
 	private long lastScanTime = 0L;
+	private ClusterTest clusterTest = null;
+	private FunctionTest functionTest = null;
 	
 	public String getName()
 	{
@@ -38,32 +35,6 @@ public final class TestStation
 	{
 		this.ip = ip;
 	}
-	public List<ClusterTest> getClusterTests()
-	{
-		if(clusterTests == null)
-		{
-			clusterTests = new ArrayList<ClusterTest>();
-		}
-		
-		return clusterTests;
-	}
-	public void setClusterTests(List<ClusterTest> clusterTests)
-	{
-		this.clusterTests = clusterTests;
-	}
-	public List<FunctionTest> getFunctionTests()
-	{
-		if(functionTests == null)
-		{
-			functionTests = new ArrayList<FunctionTest>();
-		}
-		
-		return functionTests;
-	}
-	public void setFunctionTests(List<FunctionTest> functionTests)
-	{
-		this.functionTests = functionTests;
-	}
 	public long getLastScanTime()
 	{
 		return lastScanTime;
@@ -72,24 +43,20 @@ public final class TestStation
 	{
 		this.lastScanTime = lastScanTime;
 	}
-	
-	public void addClusterTest(ClusterTest ct)
+	public ClusterTest getClusterTest()
 	{
-		if(clusterTests == null)
-		{
-			clusterTests = new ArrayList<ClusterTest>();
-		}
-		
-		clusterTests.add(ct);
+		return clusterTest;
 	}
-	
-	public void addFunctionTest(FunctionTest ft)
+	public void setClusterTest(ClusterTest clusterTest)
 	{
-		if(functionTests == null)
-		{
-			functionTests = new ArrayList<FunctionTest>();
-		}
-		
-		functionTests.add(ft);
+		this.clusterTest = clusterTest;
+	}
+	public FunctionTest getFunctionTest()
+	{
+		return functionTest;
+	}
+	public void setFunctionTest(FunctionTest functionTest)
+	{
+		this.functionTest = functionTest;
 	}
 }

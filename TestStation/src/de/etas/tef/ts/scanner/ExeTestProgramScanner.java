@@ -79,7 +79,9 @@ public class ExeTestProgramScanner extends AbstractScanner<Test>
 			{
 				Path p = file.toPath();
 				
-				if(!Files.isDirectory(p) && p.getFileName().toString().toLowerCase().endsWith(".exe"))
+				String s = IConstants.EMPTY_STRING;
+				
+				if(!Files.isDirectory(p) && (s = p.getFileName().toString().toLowerCase()).endsWith(".exe") && s.startsWith("es"))
 				{
 					test.setParentDir(startDir);
 					test.setFile(p);

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public abstract class AbstractTestProgram implements ITestProgram
+public abstract class AbstractTestProgram extends AbstractFile
 {
 	protected List<Project> projectList = new ArrayList<Project>();
 	
@@ -24,6 +24,16 @@ public abstract class AbstractTestProgram implements ITestProgram
 		}
 	}
 	
+	public List<Project> getProjectList()
+	{
+		return projectList;
+	}
+
+	public void setProjectList(List<Project> projectList)
+	{
+		this.projectList = projectList;
+	}
+
 	public List<Project> getProjects()
 	{
 		return projectList;
@@ -38,11 +48,10 @@ public abstract class AbstractTestProgram implements ITestProgram
 		while(it.hasNext())
 		{
 			Project p = it.next();
-			System.out.println(p.getPath().getFileName().toString());
+			System.out.println(p.getPath());
 			i++;
 		}
 		
 		System.out.println("Total: " + i);
 	}
-	
 }

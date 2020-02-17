@@ -1,28 +1,16 @@
 package de.etas.tef.ts.json;
 
-import java.nio.file.Path;
 
-public class Test
+public class Test extends AbstractFile
 {
-	private Path parentDir = null;
-	private Path file = null;
+	private String parentDir = null;
 	
-	public Path getParentDir()
+	public String getParentDir()
 	{
 		return parentDir;
 	}
-	public void setParentDir(Path parentDir)
+	public void setParentDir(String parentDir)
 	{
 		this.parentDir = parentDir;
 	}
-	public Path getFile()
-	{
-		return file;
-	}
-	public void setFile(Path file)
-	{
-		this.file = file;
-	}
-	
-	
 }

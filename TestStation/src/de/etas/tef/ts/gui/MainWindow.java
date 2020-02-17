@@ -239,7 +239,9 @@ public class MainWindow implements IActionListener
 		AllTestStationScan sscan = new AllTestStationScan(d.getLetter(), display); 
 		sscan.run();
 		swithInfoPane(INFO_TABLE);
+		controller.setTestStationList(sscan.getTestStationList());
 		treeNodeHandler.updateTree(sscan.getTestStationList());
+		assignStations();
 	}
 	
 	private void initTSSelection(Composite topComposite)

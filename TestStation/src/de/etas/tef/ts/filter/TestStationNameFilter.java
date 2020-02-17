@@ -23,7 +23,7 @@ public class TestStationNameFilter implements IFilter<List<Path>>
 		{
 			Path p = it.next();
 			
-			String name = p.getFileName().toString();
+			String name = p.getFileName().toString().toLowerCase();
 			
 			Iterator<String> sit = ignore.iterator();
 			

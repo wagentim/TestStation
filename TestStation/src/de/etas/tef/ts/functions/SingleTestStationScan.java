@@ -62,7 +62,5 @@ public class SingleTestStationScan implements Runnable
 			TestProgramScanner tpScanner = new TestProgramScanner(ateDir, ts);
 			tpScanner.run();
 		}
-		
-		
 	}
 }

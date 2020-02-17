@@ -56,6 +56,7 @@ public class TestProgramScanner implements Runnable
 			if( ctPath != null )
 			{
 				ct = new ClusterTest();
+				ct.setPath(ctPath);
 				ts.addClusterTest(ct);
 				ActionManager.INSTANCE.sendAction(IConstants.MSG_GREY, "Scan Cluster Test......");
 				scanProjects(ctPath, ct);
@@ -72,6 +73,7 @@ public class TestProgramScanner implements Runnable
 			if( ftPath != null )
 			{
 				ft = new FunctionTest();
+				ft.setPath(ftPath);
 				ts.addFunctionTest(ft);
 				ActionManager.INSTANCE.sendAction(IConstants.MSG_GREY, "Scan Function Test......");
 				scanProjects(ftPath, ft);
