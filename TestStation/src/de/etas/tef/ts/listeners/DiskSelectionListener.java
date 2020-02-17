@@ -7,19 +7,11 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Combo;
 
 import de.etas.tef.ts.functions.ActionManager;
-import de.etas.tef.ts.functions.Controller;
 import de.etas.tef.ts.json.Driver;
 import de.etas.tef.ts.utils.IConstants;
 
 public class DiskSelectionListener implements SelectionListener
 {
-	private final Controller controller;
-	
-	public DiskSelectionListener(final Controller controller)
-	{
-		this.controller = controller;
-	}
-	
 	@Override
 	public void widgetDefaultSelected(SelectionEvent arg0)
 	{
@@ -38,12 +30,34 @@ public class DiskSelectionListener implements SelectionListener
 		
 		if( name != null && !name.equals(IConstants.EMPTY_STRING))
 		{
-			d = controller.findDriver(name, (List<Driver>) disks.getData());
+			d = findDriver(name, (List<Driver>) disks.getData());
 		}
 
 		ActionManager.INSTANCE.sendAction(IConstants.EVENT_DISK_SELECTED, d);
 	}
 
-	
+	public Driver findDriver(String name, List<Driver> drivers)
+	{
+		for(Driver d : drivers)
+		{
+			String n = d.getName();
+			
+			if(n == null || n.equals(IConstants.EMPTY_STRING))
+			{
+				String type = d.getType();
+				
+				if(name.contains(type))
+				{
+					return d;
+				}
+			}
+			else if (n.equals(name))
+			{
+				return d;
+			}
+		}
+		
+		return null;
+	}
 	
 }

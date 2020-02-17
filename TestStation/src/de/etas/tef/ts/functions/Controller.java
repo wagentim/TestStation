@@ -6,6 +6,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 
+import de.etas.tef.ts.condition.ConditionValidator;
 import de.etas.tef.ts.json.Configure;
 import de.etas.tef.ts.json.Driver;
 import de.etas.tef.ts.json.TestStation;
@@ -19,11 +20,13 @@ public class Controller
 	private final ImageRegister imageRegister;
 	private final ColorPicker colorPicker;
 	private Configure configure = null;
+	private final ConditionValidator validator;
 	
 	public Controller(final Display display)
 	{
 		imageRegister = new ImageRegister(display);
 		colorPicker = new ColorPicker(display);
+		validator = new ConditionValidator();
 	}
 	
 	public Image getImage(int imageIndex)
@@ -86,29 +89,7 @@ public class Controller
 		return colorPicker.getColorRed();
 	}
 	
-	public Driver findDriver(String name, List<Driver> drivers)
-	{
-		for(Driver d : drivers)
-		{
-			String n = d.getName();
-			
-			if(n == null || n.equals(IConstants.EMPTY_STRING))
-			{
-				String type = d.getType();
-				
-				if(name.contains(type))
-				{
-					return d;
-				}
-			}
-			else if (n.equals(name))
-			{
-				return d;
-			}
-		}
-		
-		return null;
-	}
+	
 
 	public Color getGreen()
 	{
@@ -120,9 +101,4 @@ public class Controller
 		return colorPicker.getColorGray();
 	}
 	
-	public void setTestStationList(List<TestStation> stationList)
-	{
-		configure.setStationList(stationList);
-//		configure.writeJson();
-	}
 }

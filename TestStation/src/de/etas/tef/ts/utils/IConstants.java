@@ -27,13 +27,14 @@ public interface IConstants
 	public static final int EVENT_UPDATE_IP = 0x01;
 	public static final int EVENT_UPDATE_DRIVERS = 0x02;
 	public static final int EVENT_STATION_SELECTED = 0x03;
-	public static final int EVENT_SCAN_TYPE_TEST_PROGRAM_SELECTED = 0x04;
+	public static final int EVENT_SCAN_TYPE_CHANGED = 0x04;
 	public static final int EVENT_SCAN_TYPE_NULL_SELECTED = 0x05;
 	public static final int EVENT_DISK_SELECTED = 0x06;
 	public static final int MSG_ERR = 0x07;
-	public static final int MSG_INFO = 0x08;
-	public static final int MSG_GREEN = 0x09;
-	public static final int MSG_GREY = 0x10;
+	public static final int MSG_INFO_DARKGREEN = 0x09;
+	public static final int MSG_INFO_GRAY = 0x10;
+	public static final int MSG_INFO_BLUE = 0x08;
+	public static final int MSG_INFO_BLACK = 0x11;
 	
 	public static final String SETTING_FILE = "./settings.json";
 	public static final String[] TEST_STATIONS = {
@@ -61,6 +62,10 @@ public interface IConstants
 		"regensburg",
 		"schauinsland",
 	};
+
+
+
+
 
 
 

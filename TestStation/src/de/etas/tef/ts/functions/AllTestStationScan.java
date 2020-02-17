@@ -18,7 +18,6 @@ public class AllTestStationScan implements Runnable
 {
 	private final String startDir;
 	private final DirScanner dirScanner;
-	private final Display display;
 	private List<Path> stations = Collections.emptyList();
 	private List<TestStation> tstations;
 	
@@ -26,7 +25,6 @@ public class AllTestStationScan implements Runnable
 	{
 		this.startDir = startDir;
 		this.dirScanner = new DirScanner();
-		this.display = display;
 		tstations = new ArrayList<TestStation>();
 	}
 

@@ -6,10 +6,7 @@ import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Font;
@@ -31,12 +28,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 
 import de.etas.tef.ts.functions.ActionManager;
-import de.etas.tef.ts.functions.AllTestStationScan;
 import de.etas.tef.ts.functions.Controller;
 import de.etas.tef.ts.functions.IActionListener;
+import de.etas.tef.ts.functions.InfoBlockWriter;
 import de.etas.tef.ts.json.Driver;
 import de.etas.tef.ts.json.TestStation;
 import de.etas.tef.ts.listeners.DiskSelectionListener;
+import de.etas.tef.ts.listeners.RunSelectionListener;
 import de.etas.tef.ts.listeners.ScanTypeSelectionListener;
 import de.etas.tef.ts.listeners.StationSelectionListener;
 import de.etas.tef.ts.utils.IConstants;
@@ -50,8 +48,6 @@ public class MainWindow implements IActionListener
 	private final Controller controller;
 	private final Display display;
 	
-	private Label pcNameValue;
-	private Label ipNameValue;
 	private Label tsName;
 	private Combo diskCombo;
 	private SashForm sf;
@@ -63,8 +59,6 @@ public class MainWindow implements IActionListener
 	
 	private static final int INFO_TABLE = 0x00;
 	private static final int INFO_TEXT = 0x01;
-	
-	private GUITreeNodeHandler treeNodeHandler = null;
 	
 	public MainWindow(Display display, Controller controller)
 	{
@@ -95,7 +89,6 @@ public class MainWindow implements IActionListener
 				mb.setMessage(IConstants.TXT_WINDOW_CLOSE_HINT);
 
 				event.doit = mb.open() == SWT.YES;
-				
 			}
 		});
 		
@@ -187,61 +180,13 @@ public class MainWindow implements IActionListener
 		gd.heightHint = 25;
 		diskCombo.setLayoutData(gd);
 		diskCombo.setEnabled(false);
-		diskCombo.addSelectionListener(new DiskSelectionListener(controller));
+		diskCombo.addSelectionListener(new DiskSelectionListener());
 		
 		run = new Button(scanOptions, SWT.PUSH);
 		run.setImage(controller.getImage(IConstants.IMAGE_RUN));
 		run.setEnabled(false);
-		run.addSelectionListener(new SelectionListener()
-		{
-			
-			@Override
-			public void widgetSelected(SelectionEvent arg0)
-			{
-				// check if there is test station selected
-				
-				int index = stationList.getSelectionIndex();
-				
-				if( index == -1)
-				{
-					logInfo("Scan All Test Stations...");
-					runAllTestStationScan();
-				}
-				else
-				{
-					String selStation = stationList.getItem(stationList.getSelectionIndex());
-					if(selStation == null || selStation.equals(IConstants.EMPTY_STRING))
-					{
-						logInfo("Scan All Test Stations...");
-						runAllTestStationScan();
-					}
-					else
-					{
-						logInfo("Scan Station: " + selStation);
-					}
-				}
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0)
-			{
-				
-			}
-		});
-	}
-	
-	private void runAllTestStationScan()
-	{
-		String drver = diskCombo.getItem(diskCombo.getSelectionIndex());
-		
-		@SuppressWarnings("unchecked")
-		Driver d = controller.findDriver(drver, (List<Driver>) diskCombo.getData());
-		AllTestStationScan sscan = new AllTestStationScan(d.getLetter(), display); 
-		sscan.run();
-		swithInfoPane(INFO_TABLE);
-		controller.setTestStationList(sscan.getTestStationList());
-		treeNodeHandler.updateTree(sscan.getTestStationList());
-		assignStations();
+		runSelectionListener = new RunSelectionListener(controller);
+		run.addSelectionListener(runSelectionListener);
 	}
 	
 	private void initTSSelection(Composite topComposite)
@@ -287,54 +232,54 @@ public class MainWindow implements IActionListener
 		stationList.setData(stations);
 	}
 
-	private void initTSInfo(Composite topComposite)
-	{
-		Composite tsInfo = new Composite(topComposite, SWT.NONE);
-		GridLayout layout = new GridLayout(2, false);
-		layout.marginTop = layout.marginLeft = layout.marginRight = layout.marginBottom = 0;
-		tsInfo.setLayout(layout);
-		
-		GridData gd = new GridData(GridData.FILL_VERTICAL);
-		gd.widthHint = 200;
-		tsInfo.setLayoutData(gd);
-		
-		Label pcName = new Label(tsInfo, SWT.NONE);
-		FontData[] fD = pcName.getFont().getFontData();
-		fD[0].setHeight(10);
-		pcName.setFont( new Font(display,fD[0]));
-		pcName.setText("Name:");
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.heightHint = 25;
-		pcName.setLayoutData(gd);
-		
-		pcNameValue = new Label(tsInfo, SWT.NONE);
-		fD = pcNameValue.getFont().getFontData();
-		fD[0].setHeight(10);
-		pcNameValue.setFont( new Font(display,fD[0]));
-		pcNameValue.setText(IConstants.TXT_UNKNOWN);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.heightHint = 25;
-		pcNameValue.setLayoutData(gd);
-		
-		Label ipName = new Label(tsInfo, SWT.NONE);
-		fD = pcName.getFont().getFontData();
-		fD[0].setHeight(10);
-		ipName.setFont( new Font(display,fD[0]));
-		ipName.setText("IP:");
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.heightHint = 25;
-		ipName.setLayoutData(gd);
-		
-		ipNameValue = new Label(tsInfo, SWT.NONE);
-		fD = pcNameValue.getFont().getFontData();
-		fD[0].setHeight(10);
-		ipNameValue.setFont( new Font(display,fD[0]));
-		ipNameValue.setText(IConstants.TXT_UNKNOWN);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.heightHint = 25;
-		ipNameValue.setLayoutData(gd);
-		
-	}
+//	private void initTSInfo(Composite topComposite)
+//	{
+//		Composite tsInfo = new Composite(topComposite, SWT.NONE);
+//		GridLayout layout = new GridLayout(2, false);
+//		layout.marginTop = layout.marginLeft = layout.marginRight = layout.marginBottom = 0;
+//		tsInfo.setLayout(layout);
+//		
+//		GridData gd = new GridData(GridData.FILL_VERTICAL);
+//		gd.widthHint = 200;
+//		tsInfo.setLayoutData(gd);
+//		
+//		Label pcName = new Label(tsInfo, SWT.NONE);
+//		FontData[] fD = pcName.getFont().getFontData();
+//		fD[0].setHeight(10);
+//		pcName.setFont( new Font(display,fD[0]));
+//		pcName.setText("Name:");
+//		gd = new GridData(GridData.FILL_HORIZONTAL);
+//		gd.heightHint = 25;
+//		pcName.setLayoutData(gd);
+//		
+//		pcNameValue = new Label(tsInfo, SWT.NONE);
+//		fD = pcNameValue.getFont().getFontData();
+//		fD[0].setHeight(10);
+//		pcNameValue.setFont( new Font(display,fD[0]));
+//		pcNameValue.setText(IConstants.TXT_UNKNOWN);
+//		gd = new GridData(GridData.FILL_HORIZONTAL);
+//		gd.heightHint = 25;
+//		pcNameValue.setLayoutData(gd);
+//		
+//		Label ipName = new Label(tsInfo, SWT.NONE);
+//		fD = pcName.getFont().getFontData();
+//		fD[0].setHeight(10);
+//		ipName.setFont( new Font(display,fD[0]));
+//		ipName.setText("IP:");
+//		gd = new GridData(GridData.FILL_HORIZONTAL);
+//		gd.heightHint = 25;
+//		ipName.setLayoutData(gd);
+//		
+//		ipNameValue = new Label(tsInfo, SWT.NONE);
+//		fD = pcNameValue.getFont().getFontData();
+//		fD[0].setHeight(10);
+//		ipNameValue.setFont( new Font(display,fD[0]));
+//		ipNameValue.setText(IConstants.TXT_UNKNOWN);
+//		gd = new GridData(GridData.FILL_HORIZONTAL);
+//		gd.heightHint = 25;
+//		ipNameValue.setLayoutData(gd);
+//		
+//	}
 
 	private void initTestStationName(Composite topComposite)
 	{
@@ -397,6 +342,8 @@ public class MainWindow implements IActionListener
 		txtInfoBlock.setLayoutData(gd);
 		txtInfoBlock.setEditable(false);
 		txtInfoBlock.setVisible(false);
+		
+		writer = new InfoBlockWriter(txtInfoBlock);
 		
 		sf.setWeights(new int[]{1, 0});
 		
@@ -492,7 +439,6 @@ public class MainWindow implements IActionListener
         statusLabel.setVisible(false);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public void receivedAction(int type, Object content)
 	{
@@ -506,7 +452,7 @@ public class MainWindow implements IActionListener
 		}
 		else if( type == IConstants.EVENT_UPDATE_DRIVERS )
 		{
-			updateDrivers((List<Driver>)content);
+			updateDrivers(null);
 		}
 		else if( type == IConstants.EVENT_STATION_SELECTED )
 		{
@@ -519,26 +465,9 @@ public class MainWindow implements IActionListener
 			updateStationName(ts.getName());
 			setScanTypeEnable(true);
 		}
-		else if( type == IConstants.EVENT_SCAN_TYPE_TEST_PROGRAM_SELECTED)
+		else if( type == IConstants.EVENT_SCAN_TYPE_CHANGED)
 		{
-			logInfo("Scanning local Drivers...");
 			setDiskDriversEnable(true);
-		}
-		else if( type == IConstants.MSG_INFO )
-		{
-			logInfo((String)content);
-		}
-		else if( type == IConstants.MSG_ERR )
-		{
-			logError((String)content);
-		}
-		else if( type == IConstants.MSG_GREEN )
-		{
-			logGreen((String)content);
-		}
-		else if( type == IConstants.MSG_GREY )
-		{
-			logGrey((String)content);
 		}
 		else if( type == IConstants.EVENT_SCAN_TYPE_NULL_SELECTED)
 		{
@@ -549,20 +478,6 @@ public class MainWindow implements IActionListener
 		{
 			setRunButtonEnable(content == null ? false : true);
 		}
-	}
-
-	private void logGreen(String text)
-	{
-		String txt = "[" + sdf.format(new Date(System.currentTimeMillis())) + "]" + "[INFO] " + text + "\n";
-
-		StyleRange sr = new StyleRange();
-		sr.start = txtInfoBlock.getText().length();
-		sr.length = txt.length();
-		sr.foreground = controller.getGreen();
-		sr.fontStyle = SWT.NORMAL;
-		txtInfoBlock.append(txt);
-		txtInfoBlock.setStyleRange(sr);
-		moveToLastLine();
 	}
 
 	private void setRunButtonEnable(boolean b)
@@ -585,7 +500,6 @@ public class MainWindow implements IActionListener
 				public void run()
 				{
 					controller.updateDrivers();
-					logInfo("Scan local Drivers finished!");
 				}
 			});
 		}
@@ -633,23 +547,23 @@ public class MainWindow implements IActionListener
 		diskCombo.setData(content);
 	}
 
-	private void updateIP(String content)
-	{
-		if(content == null || content.isEmpty())
-		{
-			content = IConstants.TXT_UNKNOWN;
-		}
-		ipNameValue.setText(content);
-	}
-
-	private void updatePCName(String content)
-	{
-		if(content == null || content.isEmpty())
-		{
-			content = IConstants.TXT_UNKNOWN;
-		}
-		pcNameValue.setText(content);
-	}
+//	private void updateIP(String content)
+//	{
+//		if(content == null || content.isEmpty())
+//		{
+//			content = IConstants.TXT_UNKNOWN;
+//		}
+//		ipNameValue.setText(content);
+//	}
+//
+//	private void updatePCName(String content)
+//	{
+//		if(content == null || content.isEmpty())
+//		{
+//			content = IConstants.TXT_UNKNOWN;
+//		}
+//		pcNameValue.setText(content);
+//	}
 	
 	private void updateStationName(String content)
 	{
@@ -658,52 +572,5 @@ public class MainWindow implements IActionListener
 			content = IConstants.TXT_UNKNOWN;
 		}
 		tsName.setText(content);
-	}
-	
-	private void logError(String text)
-	{
-		String txt = "[" + sdf.format(new Date(System.currentTimeMillis())) + "]" + "[ERROR] " + text + "\n";
-
-		StyleRange sr = new StyleRange();
-		sr.start = txtInfoBlock.getText().length();
-		sr.length = txt.length();
-		sr.foreground = controller.getRed();
-		sr.fontStyle = SWT.NORMAL;
-		txtInfoBlock.append(txt);
-		txtInfoBlock.setStyleRange(sr);
-		moveToLastLine();
-	}
-
-	private void logInfo(String text)
-	{
-		String txt = "[" + sdf.format(new Date(System.currentTimeMillis())) + "]" + "[INFO] " + text + "\n";
-		
-		StyleRange sr = new StyleRange();
-		sr.start = txtInfoBlock.getText().length();
-		sr.length = txt.length();
-		sr.foreground = controller.getBlue();
-		sr.fontStyle = SWT.NORMAL;
-		txtInfoBlock.append(txt);
-		txtInfoBlock.setStyleRange(sr);
-		moveToLastLine();
-	}
-	
-	private void logGrey(String text)
-	{
-		String txt = "[" + sdf.format(new Date(System.currentTimeMillis())) + "]" + "[INFO] " + text + "\n";
-		
-		StyleRange sr = new StyleRange();
-		sr.start = txtInfoBlock.getText().length();
-		sr.length = txt.length();
-		sr.foreground = controller.getGray();
-		sr.fontStyle = SWT.NORMAL;
-		txtInfoBlock.append(txt);
-		txtInfoBlock.setStyleRange(sr);
-		moveToLastLine();
-	}
-	
-	private void moveToLastLine()
-	{
-		txtInfoBlock.setTopIndex(txtInfoBlock.getLineCount());
 	}
 }
