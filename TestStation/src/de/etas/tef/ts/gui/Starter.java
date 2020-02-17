@@ -2,6 +2,8 @@ package de.etas.tef.ts.gui;
 
 import org.eclipse.swt.widgets.Display;
 
+import de.etas.tef.ts.functions.Controller;
+
 
 public class Starter
 {

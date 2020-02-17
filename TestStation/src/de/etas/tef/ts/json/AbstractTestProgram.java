@@ -24,6 +24,11 @@ public abstract class AbstractTestProgram implements ITestProgram
 		}
 	}
 	
+	public List<Project> getProjects()
+	{
+		return projectList;
+	}
+	
 	public void printProjects()
 	{
 		Iterator<Project> it = projectList.iterator();

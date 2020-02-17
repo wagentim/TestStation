@@ -8,7 +8,7 @@ import de.etas.tef.ts.filter.FindClusterTestDirFilter;
 import de.etas.tef.ts.filter.FindFunctionTestDirFilter;
 import de.etas.tef.ts.filter.FindProjectDirFilter;
 import de.etas.tef.ts.filter.FindVersionDirFilter;
-import de.etas.tef.ts.gui.ActionManager;
+import de.etas.tef.ts.functions.ActionManager;
 import de.etas.tef.ts.json.AbstractTestProgram;
 import de.etas.tef.ts.json.ClusterTest;
 import de.etas.tef.ts.json.FunctionTest;

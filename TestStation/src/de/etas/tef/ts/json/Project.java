@@ -7,14 +7,13 @@ import java.util.List;
 public class Project
 {
 	private final List<Test> tests;
+	private Path path = null;
 	
 	public Project()
 	{
 		tests = new ArrayList<Test>();
 	}
 	
-	private Path path = null;
-
 	public Path getPath()
 	{
 		return path;
@@ -28,5 +27,10 @@ public class Project
 	public void addTest(final Test test)
 	{
 		tests.add(test);
+	}
+	
+	public List<Test> getTests()
+	{
+		return tests;
 	}
 }

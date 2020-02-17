@@ -6,8 +6,8 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Combo;
 
-import de.etas.tef.ts.gui.ActionManager;
-import de.etas.tef.ts.gui.Controller;
+import de.etas.tef.ts.functions.ActionManager;
+import de.etas.tef.ts.functions.Controller;
 import de.etas.tef.ts.json.Driver;
 import de.etas.tef.ts.utils.IConstants;
 

@@ -30,7 +30,10 @@ import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 
+import de.etas.tef.ts.functions.ActionManager;
 import de.etas.tef.ts.functions.AllTestStationScan;
+import de.etas.tef.ts.functions.Controller;
+import de.etas.tef.ts.functions.IActionListener;
 import de.etas.tef.ts.json.Driver;
 import de.etas.tef.ts.json.TestStation;
 import de.etas.tef.ts.listeners.DiskSelectionListener;
@@ -60,6 +63,8 @@ public class MainWindow implements IActionListener
 	
 	private static final int INFO_TABLE = 0x00;
 	private static final int INFO_TEXT = 0x01;
+	
+	private GUITreeNodeHandler treeNodeHandler = null;
 	
 	public MainWindow(Display display, Controller controller)
 	{
@@ -209,7 +214,6 @@ public class MainWindow implements IActionListener
 					{
 						logInfo("Scan All Test Stations...");
 						runAllTestStationScan();
-						
 					}
 					else
 					{
@@ -233,7 +237,9 @@ public class MainWindow implements IActionListener
 		@SuppressWarnings("unchecked")
 		Driver d = controller.findDriver(drver, (List<Driver>) diskCombo.getData());
 		AllTestStationScan sscan = new AllTestStationScan(d.getLetter(), display); 
-		display.asyncExec(sscan);
+		sscan.run();
+		swithInfoPane(INFO_TABLE);
+		treeNodeHandler.updateTree(sscan.getTestStationList());
 	}
 	
 	private void initTSSelection(Composite topComposite)
@@ -381,6 +387,8 @@ public class MainWindow implements IActionListener
 		tree.setLayoutData(gd);
 		tree.setHeaderVisible(false);
 		tree.setLinesVisible(true);
+		
+		treeNodeHandler = new GUITreeNodeHandler(tree);
 		
 		txtInfoBlock = new StyledText(sf, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
 		gd = new GridData(GridData.FILL_BOTH);

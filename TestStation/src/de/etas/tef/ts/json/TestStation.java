@@ -1,7 +1,6 @@
 package de.etas.tef.ts.json;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import de.etas.tef.ts.utils.IConstants;
@@ -11,8 +10,8 @@ public final class TestStation
 	private String name = IConstants.TXT_UNKNOWN;
 	private String pcName = IConstants.TXT_UNKNOWN;
 	private String ip = IConstants.TXT_UNKNOWN;
-	private List<ClusterTest> clusterTests = Collections.emptyList();
-	private List<FunctionTest> functionTests = Collections.emptyList();
+	private List<ClusterTest> clusterTests = null;
+	private List<FunctionTest> functionTests = null;
 	private long lastScanTime = 0L;
 	
 	public String getName()
@@ -41,6 +40,11 @@ public final class TestStation
 	}
 	public List<ClusterTest> getClusterTests()
 	{
+		if(clusterTests == null)
+		{
+			clusterTests = new ArrayList<ClusterTest>();
+		}
+		
 		return clusterTests;
 	}
 	public void setClusterTests(List<ClusterTest> clusterTests)
@@ -49,6 +53,11 @@ public final class TestStation
 	}
 	public List<FunctionTest> getFunctionTests()
 	{
+		if(functionTests == null)
+		{
+			functionTests = new ArrayList<FunctionTest>();
+		}
+		
 		return functionTests;
 	}
 	public void setFunctionTests(List<FunctionTest> functionTests)

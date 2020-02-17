@@ -1,4 +1,4 @@
-package de.etas.tef.ts.gui;
+package de.etas.tef.ts.functions;
 
 public interface IActionListener
 {

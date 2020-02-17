@@ -4,7 +4,6 @@ import java.nio.file.Path;
 import java.util.List;
 
 import de.etas.tef.ts.filter.FindATEToolsDirFilter;
-import de.etas.tef.ts.gui.ActionManager;
 import de.etas.tef.ts.json.TestStation;
 import de.etas.tef.ts.scanner.DirScanner;
 import de.etas.tef.ts.scanner.TestProgramScanner;
