@@ -1,6 +1,7 @@
 package de.etas.tef.ts.functions;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.eclipse.swt.widgets.Display;
 import de.etas.tef.ts.filter.FindValidDirFilter;
 import de.etas.tef.ts.filter.TestStationNameFilter;
 import de.etas.tef.ts.gui.ActionManager;
+import de.etas.tef.ts.json.TestStation;
 import de.etas.tef.ts.scanner.DirScanner;
 import de.etas.tef.ts.utils.IConstants;
 
@@ -19,12 +21,14 @@ public class AllTestStationScan implements Runnable
 	private final DirScanner dirScanner;
 	private final Display display;
 	private List<Path> stations = Collections.emptyList();
+	private List<TestStation> tstations;
 	
 	public AllTestStationScan(final String startDir, final Display display)
 	{
 		this.startDir = startDir;
 		this.dirScanner = new DirScanner();
 		this.display = display;
+		tstations = new ArrayList<TestStation>();
 	}
 
 	@Override
@@ -48,6 +52,7 @@ public class AllTestStationScan implements Runnable
 			{
 				SingleTestStationScan sts = new SingleTestStationScan(validDirPath, p.getFileName().toString(), false);
 				sts.run();
+				tstations.add(sts.getTestStation());
 			}
 			else
 			{
@@ -89,5 +94,10 @@ public class AllTestStationScan implements Runnable
 			}
 		}
 		return found > 4 ? true : false;
+	}
+	
+	public List<TestStation> getTestStationList()
+	{
+		return tstations;
 	}
 }

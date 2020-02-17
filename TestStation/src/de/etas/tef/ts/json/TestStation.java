@@ -1,5 +1,6 @@
 package de.etas.tef.ts.json;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -61,5 +62,25 @@ public final class TestStation
 	public void setLastScanTime(long lastScanTime)
 	{
 		this.lastScanTime = lastScanTime;
+	}
+	
+	public void addClusterTest(ClusterTest ct)
+	{
+		if(clusterTests == null)
+		{
+			clusterTests = new ArrayList<ClusterTest>();
+		}
+		
+		clusterTests.add(ct);
+	}
+	
+	public void addFunctionTest(FunctionTest ft)
+	{
+		if(functionTests == null)
+		{
+			functionTests = new ArrayList<FunctionTest>();
+		}
+		
+		functionTests.add(ft);
 	}
 }

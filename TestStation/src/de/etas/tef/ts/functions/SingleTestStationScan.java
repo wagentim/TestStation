@@ -28,6 +28,11 @@ public class SingleTestStationScan implements Runnable
 		ts.setName(stationName);
 	}
 	
+	public TestStation getTestStation()
+	{
+		return ts;
+	}
+	
 	private Path findATEToolsDir()
 	{
 		dirScanner.removeAllFilters();
@@ -55,7 +60,7 @@ public class SingleTestStationScan implements Runnable
 		else
 		{
 			ActionManager.INSTANCE.sendAction(IConstants.MSG_GREEN, "Scan Test Program in Location: " + ateDir.toString());
-			TestProgramScanner tpScanner = new TestProgramScanner(ateDir);
+			TestProgramScanner tpScanner = new TestProgramScanner(ateDir, ts);
 			tpScanner.run();
 		}
 		

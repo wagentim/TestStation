@@ -232,7 +232,8 @@ public class MainWindow implements IActionListener
 		
 		@SuppressWarnings("unchecked")
 		Driver d = controller.findDriver(drver, (List<Driver>) diskCombo.getData());
-		new AllTestStationScan(d.getLetter(), display).run();
+		AllTestStationScan sscan = new AllTestStationScan(d.getLetter(), display); 
+		display.asyncExec(sscan);
 	}
 	
 	private void initTSSelection(Composite topComposite)
