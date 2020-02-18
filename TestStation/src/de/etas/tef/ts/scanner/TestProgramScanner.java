@@ -124,7 +124,7 @@ public class TestProgramScanner implements Runnable
 			exeScanner.removeAllFilters();
 			exeScanner.setStartDir(startDir).setTest(test).startScanning();
 //			ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO, "Path: " + startDir.toString());
-			
+			test.setParentDir(IConstants.EMPTY_STRING);
 			String s = IConstants.EMPTY_STRING;
 			
 			if( (s = test.getPath()) == null || s.isEmpty())

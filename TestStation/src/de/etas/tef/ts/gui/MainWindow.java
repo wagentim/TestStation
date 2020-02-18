@@ -92,6 +92,8 @@ public class MainWindow implements IActionListener
 				mb.setMessage(IConstants.TXT_WINDOW_CLOSE_HINT);
 
 				event.doit = mb.open() == SWT.YES;
+				
+				System.exit(0);
 			}
 		});
 		

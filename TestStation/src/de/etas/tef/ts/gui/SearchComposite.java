@@ -21,6 +21,7 @@ public class SearchComposite extends Composite
 //	private final Controller controller;
 	private Text searchText;
 	private Label cancelImage;
+	private StringBuilder sb;
 	
 	public SearchComposite(Composite parent, int style, Controller controller)
 	{
@@ -55,6 +56,9 @@ public class SearchComposite extends Composite
 			public void modifyText(ModifyEvent event)
 			{
 				String text = searchText.getText();
+				
+				text = filterText(text);
+				
 				if(!text.isEmpty())
 				{
 					cancelImage.setVisible(true);
@@ -101,8 +105,25 @@ public class SearchComposite extends Composite
 
 		});
 		
+		sb = new StringBuilder();
 	}
 	
+	protected String filterText(String text)
+	{
+		sb.delete(0, sb.length());
+		
+		for(char c : text.toCharArray())
+		{
+			if(c != 'x' && c!='X')
+			{
+				sb.append(c);
+			}
+		}
+		
+		
+		return sb.toString();
+	}
+
 	public void clearText()
 	{
 		searchText.setText(IConstants.EMPTY_STRING);

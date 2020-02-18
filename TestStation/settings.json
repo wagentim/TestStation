@@ -145,7 +145,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Avus\\_Valid\\ATE-Tools\\ClusterTest\\ES630"
+                "parentDir": ""
               }
             ],
             "path": "Z:\\Avus\\_Valid\\ATE-Tools\\ClusterTest\\ES630"
@@ -170,7 +170,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Avus\\_Valid\\ATE-Tools\\ClusterTest\\ES6x0_Dig_PCB"
+                "parentDir": ""
               }
             ],
             "path": "Z:\\Avus\\_Valid\\ATE-Tools\\ClusterTest\\ES6x0_Dig_PCB"
@@ -187,7 +187,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Avus\\_Valid\\ATE-Tools\\ClusterTest\\ES930"
+                "parentDir": ""
               }
             ],
             "path": "Z:\\Avus\\_Valid\\ATE-Tools\\ClusterTest\\ES930"
@@ -200,7 +200,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Avus\\_Valid\\ATE-Tools\\FunctionTest\\ES4xx",
+                "parentDir": "",
                 "path": "Z:\\Avus\\_Valid\\ATE-Tools\\FunctionTest\\ES4xx\\ES4xx_Functiontest.exe"
               }
             ],
@@ -209,7 +209,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Avus\\_Valid\\ATE-Tools\\FunctionTest\\ES610",
+                "parentDir": "",
                 "path": "Z:\\Avus\\_Valid\\ATE-Tools\\FunctionTest\\ES610\\ES610_FT_V2_0_0.exe"
               }
             ],
@@ -218,7 +218,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Avus\\_Valid\\ATE-Tools\\FunctionTest\\ES611",
+                "parentDir": "",
                 "path": "Z:\\Avus\\_Valid\\ATE-Tools\\FunctionTest\\ES611\\ES611_FT_V2_2_1.exe"
               }
             ],
@@ -227,7 +227,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Avus\\_Valid\\ATE-Tools\\FunctionTest\\ES620",
+                "parentDir": "",
                 "path": "Z:\\Avus\\_Valid\\ATE-Tools\\FunctionTest\\ES620\\ES620_FT_V2_0_0.exe"
               }
             ],
@@ -236,7 +236,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Avus\\_Valid\\ATE-Tools\\FunctionTest\\ES650",
+                "parentDir": "",
                 "path": "Z:\\Avus\\_Valid\\ATE-Tools\\FunctionTest\\ES650\\ES650_FT_V2_0_0.exe"
               }
             ],
@@ -245,7 +245,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Avus\\_Valid\\ATE-Tools\\FunctionTest\\ES6xx",
+                "parentDir": "",
                 "path": "Z:\\Avus\\_Valid\\ATE-Tools\\FunctionTest\\ES6xx\\ES6xx_Functiontest.exe"
               }
             ],
@@ -254,7 +254,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Avus\\_Valid\\ATE-Tools\\FunctionTest\\ES710"
+                "parentDir": ""
               }
             ],
             "path": "Z:\\Avus\\_Valid\\ATE-Tools\\FunctionTest\\ES710"
@@ -262,7 +262,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Avus\\_Valid\\ATE-Tools\\FunctionTest\\ES715"
+                "parentDir": ""
               }
             ],
             "path": "Z:\\Avus\\_Valid\\ATE-Tools\\FunctionTest\\ES715"
@@ -326,7 +326,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Bayreuth\\_Valid\\Ate-Tools\\ClusterTest\\ES891_1_OpticalInspection"
+                "parentDir": ""
               }
             ],
             "path": "Z:\\Bayreuth\\_Valid\\Ate-Tools\\ClusterTest\\ES891_1_OpticalInspection"
@@ -377,7 +377,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Bayreuth\\_Valid\\Ate-Tools\\Functiontest\\ES830",
+                "parentDir": "",
                 "path": "Z:\\Bayreuth\\_Valid\\Ate-Tools\\Functiontest\\ES830\\ES830_Functiontest.exe"
               }
             ],
@@ -386,7 +386,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Bayreuth\\_Valid\\Ate-Tools\\Functiontest\\ES8xx",
+                "parentDir": "",
                 "path": "Z:\\Bayreuth\\_Valid\\Ate-Tools\\Functiontest\\ES8xx\\ES8xx_Functiontest.exe"
               }
             ],
@@ -395,7 +395,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Bayreuth\\_Valid\\Ate-Tools\\Functiontest\\ES8xx_OldHsp",
+                "parentDir": "",
                 "path": "Z:\\Bayreuth\\_Valid\\Ate-Tools\\Functiontest\\ES8xx_OldHsp\\ES8xx_Functiontest.exe"
               }
             ],
@@ -520,7 +520,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Bonn\\_Valid\\ATE-Tools\\Functiontest\\ES4xx",
+                "parentDir": "",
                 "path": "Z:\\Bonn\\_Valid\\ATE-Tools\\Functiontest\\ES4xx\\ES4xx_Functiontest.exe"
               }
             ],
@@ -529,7 +529,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Bonn\\_Valid\\ATE-Tools\\Functiontest\\ES63x",
+                "parentDir": "",
                 "path": "Z:\\Bonn\\_Valid\\ATE-Tools\\Functiontest\\ES63x\\ES63x_Functiontest.exe"
               }
             ],
@@ -538,7 +538,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Bonn\\_Valid\\ATE-Tools\\Functiontest\\ES6xx",
+                "parentDir": "",
                 "path": "Z:\\Bonn\\_Valid\\ATE-Tools\\Functiontest\\ES6xx\\ES6xx_Functiontest.exe"
               }
             ],
@@ -756,7 +756,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Bremen\\_Valid\\ATE-Tools\\ClusterTest\\ES930"
+                "parentDir": ""
               }
             ],
             "path": "Z:\\Bremen\\_Valid\\ATE-Tools\\ClusterTest\\ES930"
@@ -769,7 +769,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Bremen\\_Valid\\ATE-Tools\\FunctionTest\\ES4xx",
+                "parentDir": "",
                 "path": "Z:\\Bremen\\_Valid\\ATE-Tools\\FunctionTest\\ES4xx\\ES4xx_Functiontest.exe"
               }
             ],
@@ -778,7 +778,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Bremen\\_Valid\\ATE-Tools\\FunctionTest\\ES63x",
+                "parentDir": "",
                 "path": "Z:\\Bremen\\_Valid\\ATE-Tools\\FunctionTest\\ES63x\\ES63x_Functiontest.exe"
               }
             ],
@@ -787,7 +787,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Bremen\\_Valid\\ATE-Tools\\FunctionTest\\ES8xx",
+                "parentDir": "",
                 "path": "Z:\\Bremen\\_Valid\\ATE-Tools\\FunctionTest\\ES8xx\\ES8xx_Functiontest.exe"
               }
             ],
@@ -1021,7 +1021,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Gaildorf\\_Valid\\ATE-Tools\\ClusterTest\\ES5350_1",
+                "parentDir": "",
                 "path": "Z:\\Gaildorf\\_Valid\\ATE-Tools\\ClusterTest\\ES5350_1\\ES5350.1_V1_0_2.exe"
               }
             ],
@@ -1059,7 +1059,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Groenland\\_Valid\\ATE-Tools\\FunctionTest\\ES581",
+                "parentDir": "",
                 "path": "Z:\\Groenland\\_Valid\\ATE-Tools\\FunctionTest\\ES581\\ES581_Functiontest.exe"
               }
             ],
@@ -1178,7 +1178,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Hamburg\\_Valid\\ATE-Tools\\FunctionTest\\ES4xx",
+                "parentDir": "",
                 "path": "Z:\\Hamburg\\_Valid\\ATE-Tools\\FunctionTest\\ES4xx\\ES4xx_Functiontest.exe"
               }
             ],
@@ -1187,7 +1187,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Hamburg\\_Valid\\ATE-Tools\\FunctionTest\\ES611",
+                "parentDir": "",
                 "path": "Z:\\Hamburg\\_Valid\\ATE-Tools\\FunctionTest\\ES611\\ES611_FT_V2_2_1.exe"
               }
             ],
@@ -1196,7 +1196,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Hamburg\\_Valid\\ATE-Tools\\FunctionTest\\ES63x",
+                "parentDir": "",
                 "path": "Z:\\Hamburg\\_Valid\\ATE-Tools\\FunctionTest\\ES63x\\ES63x_Functiontest.exe"
               }
             ],
@@ -1205,7 +1205,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Hamburg\\_Valid\\ATE-Tools\\FunctionTest\\ES63x - Kopie",
+                "parentDir": "",
                 "path": "Z:\\Hamburg\\_Valid\\ATE-Tools\\FunctionTest\\ES63x - Kopie\\ES63x_Functiontest.exe"
               }
             ],
@@ -1494,7 +1494,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Island\\_Valid\\ATE-Tools\\FunctionTest\\ES583",
+                "parentDir": "",
                 "path": "Z:\\Island\\_Valid\\ATE-Tools\\FunctionTest\\ES583\\ES583_Functiontest.exe"
               }
             ],
@@ -1679,7 +1679,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Koeln\\_Valid\\ATE-Tools\\ClusterTest\\ES6x0_Dig_PCB"
+                "parentDir": ""
               }
             ],
             "path": "Z:\\Koeln\\_Valid\\ATE-Tools\\ClusterTest\\ES6x0_Dig_PCB"
@@ -1692,7 +1692,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Koeln\\_Valid\\ATE-Tools\\FunctionTest\\ES4xx",
+                "parentDir": "",
                 "path": "Z:\\Koeln\\_Valid\\ATE-Tools\\FunctionTest\\ES4xx\\ES4xx_Functiontest.exe"
               }
             ],
@@ -1701,7 +1701,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Koeln\\_Valid\\ATE-Tools\\FunctionTest\\ES6xx",
+                "parentDir": "",
                 "path": "Z:\\Koeln\\_Valid\\ATE-Tools\\FunctionTest\\ES6xx\\ES6xx_Functiontest.exe"
               }
             ],
@@ -1865,7 +1865,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Konstanz\\_VALID\\ATE-Tools\\ClusterTest\\ES1600_1B"
+                "parentDir": ""
               }
             ],
             "path": "Z:\\Konstanz\\_VALID\\ATE-Tools\\ClusterTest\\ES1600_1B"
@@ -1989,7 +1989,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Konstanz\\_VALID\\ATE-Tools\\ClusterTest\\ES523_1",
+                "parentDir": "",
                 "path": "Z:\\Konstanz\\_VALID\\ATE-Tools\\ClusterTest\\ES523_1\\ES523_1_CT_V1_1_2.exe"
               }
             ],
@@ -2007,7 +2007,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Konstanz\\_VALID\\ATE-Tools\\ClusterTest\\ES584_1",
+                "parentDir": "",
                 "path": "Z:\\Konstanz\\_VALID\\ATE-Tools\\ClusterTest\\ES584_1\\ES58x_ControlPowerSupply.exe"
               }
             ],
@@ -2196,7 +2196,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Konstanz\\_VALID\\ATE-Tools\\ClusterTest\\ES930"
+                "parentDir": ""
               }
             ],
             "path": "Z:\\Konstanz\\_VALID\\ATE-Tools\\ClusterTest\\ES930"
@@ -2209,7 +2209,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Konstanz\\_VALID\\ATE-Tools\\Functiontest\\ES4xx",
+                "parentDir": "",
                 "path": "Z:\\Konstanz\\_VALID\\ATE-Tools\\Functiontest\\ES4xx\\ES4xx_Functiontest.exe"
               }
             ],
@@ -2227,7 +2227,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Konstanz\\_VALID\\ATE-Tools\\Functiontest\\ES581",
+                "parentDir": "",
                 "path": "Z:\\Konstanz\\_VALID\\ATE-Tools\\Functiontest\\ES581\\ES581_Functiontest.exe"
               }
             ],
@@ -2236,7 +2236,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Konstanz\\_VALID\\ATE-Tools\\Functiontest\\ES583",
+                "parentDir": "",
                 "path": "Z:\\Konstanz\\_VALID\\ATE-Tools\\Functiontest\\ES583\\ES583_Functiontest.exe"
               }
             ],
@@ -2245,7 +2245,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Konstanz\\_VALID\\ATE-Tools\\Functiontest\\ES58x",
+                "parentDir": "",
                 "path": "Z:\\Konstanz\\_VALID\\ATE-Tools\\Functiontest\\ES58x\\ES58x_Functiontest.exe"
               }
             ],
@@ -2254,7 +2254,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Konstanz\\_VALID\\ATE-Tools\\Functiontest\\ES59x_ES690",
+                "parentDir": "",
                 "path": "Z:\\Konstanz\\_VALID\\ATE-Tools\\Functiontest\\ES59x_ES690\\ES59x_ES690_Functiontest.exe"
               }
             ],
@@ -2263,7 +2263,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Konstanz\\_VALID\\ATE-Tools\\Functiontest\\ES5xx",
+                "parentDir": "",
                 "path": "Z:\\Konstanz\\_VALID\\ATE-Tools\\Functiontest\\ES5xx\\ES5xx_Functiontest.exe"
               }
             ],
@@ -2272,7 +2272,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Konstanz\\_VALID\\ATE-Tools\\Functiontest\\ES91x",
+                "parentDir": "",
                 "path": "Z:\\Konstanz\\_VALID\\ATE-Tools\\Functiontest\\ES91x\\ES9xx_Functiontest.exe"
               }
             ],
@@ -2436,7 +2436,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Lindau\\_Valid\\ATE-Tools\\ClusterTest\\ES1600_1B"
+                "parentDir": ""
               }
             ],
             "path": "Z:\\Lindau\\_Valid\\ATE-Tools\\ClusterTest\\ES1600_1B"
@@ -2568,7 +2568,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Lindau\\_Valid\\ATE-Tools\\ClusterTest\\ES523_1",
+                "parentDir": "",
                 "path": "Z:\\Lindau\\_Valid\\ATE-Tools\\ClusterTest\\ES523_1\\ES523_1_CT_V1_1_2.exe"
               }
             ],
@@ -2586,7 +2586,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Lindau\\_Valid\\ATE-Tools\\ClusterTest\\ES584_1",
+                "parentDir": "",
                 "path": "Z:\\Lindau\\_Valid\\ATE-Tools\\ClusterTest\\ES584_1\\ES58x_ControlPowerSupply.exe"
               }
             ],
@@ -2764,7 +2764,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Lindau\\_Valid\\ATE-Tools\\Functiontest\\ES4xx",
+                "parentDir": "",
                 "path": "Z:\\Lindau\\_Valid\\ATE-Tools\\Functiontest\\ES4xx\\ES4xx_Functiontest.exe"
               }
             ],
@@ -2782,7 +2782,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Lindau\\_Valid\\ATE-Tools\\Functiontest\\ES581",
+                "parentDir": "",
                 "path": "Z:\\Lindau\\_Valid\\ATE-Tools\\Functiontest\\ES581\\ES581_Functiontest.exe"
               }
             ],
@@ -2791,7 +2791,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Lindau\\_Valid\\ATE-Tools\\Functiontest\\ES583",
+                "parentDir": "",
                 "path": "Z:\\Lindau\\_Valid\\ATE-Tools\\Functiontest\\ES583\\ES583_Functiontest.exe"
               }
             ],
@@ -2800,7 +2800,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Lindau\\_Valid\\ATE-Tools\\Functiontest\\ES58x",
+                "parentDir": "",
                 "path": "Z:\\Lindau\\_Valid\\ATE-Tools\\Functiontest\\ES58x\\ES58x_Functiontest.exe"
               }
             ],
@@ -2809,7 +2809,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Lindau\\_Valid\\ATE-Tools\\Functiontest\\ES59x_ES690",
+                "parentDir": "",
                 "path": "Z:\\Lindau\\_Valid\\ATE-Tools\\Functiontest\\ES59x_ES690\\ES59x_ES690_Functiontest.exe"
               }
             ],
@@ -2818,7 +2818,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Lindau\\_Valid\\ATE-Tools\\Functiontest\\ES5xx",
+                "parentDir": "",
                 "path": "Z:\\Lindau\\_Valid\\ATE-Tools\\Functiontest\\ES5xx\\ES5xx_Functiontest.exe"
               }
             ],
@@ -2827,7 +2827,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Lindau\\_Valid\\ATE-Tools\\Functiontest\\ES5xx_Org",
+                "parentDir": "",
                 "path": "Z:\\Lindau\\_Valid\\ATE-Tools\\Functiontest\\ES5xx_Org\\ES5xx_Functiontest.exe"
               }
             ],
@@ -2836,7 +2836,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Lindau\\_Valid\\ATE-Tools\\Functiontest\\ES91x",
+                "parentDir": "",
                 "path": "Z:\\Lindau\\_Valid\\ATE-Tools\\Functiontest\\ES91x\\ES9xx_Functiontest.exe"
               }
             ],
@@ -2989,7 +2989,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Monaco\\_Valid\\ATE-Tools\\FunctionTest\\ES4xx",
+                "parentDir": "",
                 "path": "Z:\\Monaco\\_Valid\\ATE-Tools\\FunctionTest\\ES4xx\\ES4xx_Functiontest.exe"
               }
             ],
@@ -2998,7 +2998,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Monaco\\_Valid\\ATE-Tools\\FunctionTest\\ES610",
+                "parentDir": "",
                 "path": "Z:\\Monaco\\_Valid\\ATE-Tools\\FunctionTest\\ES610\\ES610_FT_V2_0_0.exe"
               }
             ],
@@ -3007,7 +3007,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Monaco\\_Valid\\ATE-Tools\\FunctionTest\\ES620",
+                "parentDir": "",
                 "path": "Z:\\Monaco\\_Valid\\ATE-Tools\\FunctionTest\\ES620\\ES620_FT_V2_0_0.exe"
               }
             ],
@@ -3016,7 +3016,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Monaco\\_Valid\\ATE-Tools\\FunctionTest\\ES650",
+                "parentDir": "",
                 "path": "Z:\\Monaco\\_Valid\\ATE-Tools\\FunctionTest\\ES650\\ES650_FT_V2_0_0.exe"
               }
             ],
@@ -3025,7 +3025,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Monaco\\_Valid\\ATE-Tools\\FunctionTest\\ES6xx",
+                "parentDir": "",
                 "path": "Z:\\Monaco\\_Valid\\ATE-Tools\\FunctionTest\\ES6xx\\ES6xx_Functiontest.exe"
               }
             ],
@@ -3146,7 +3146,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Regensburg\\_Valid\\ATE-Tools\\ClusterTest\\ES584_1",
+                "parentDir": "",
                 "path": "Z:\\Regensburg\\_Valid\\ATE-Tools\\ClusterTest\\ES584_1\\ES58x_ControlPowerSupply.exe"
               }
             ],
@@ -3200,7 +3200,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Regensburg\\_Valid\\ATE-Tools\\FunctionTest\\ES9xx",
+                "parentDir": "",
                 "path": "Z:\\Regensburg\\_Valid\\ATE-Tools\\FunctionTest\\ES9xx\\ES93x_Functiontest.exe"
               }
             ],
@@ -3209,7 +3209,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Regensburg\\_Valid\\ATE-Tools\\FunctionTest\\ES9xx - Kopie",
+                "parentDir": "",
                 "path": "Z:\\Regensburg\\_Valid\\ATE-Tools\\FunctionTest\\ES9xx - Kopie\\ES93x_Functiontest.exe"
               }
             ],
@@ -3218,7 +3218,7 @@
           {
             "tests": [
               {
-                "parentDir": "Z:\\Regensburg\\_Valid\\ATE-Tools\\FunctionTest\\ES9xx_Manually",
+                "parentDir": "",
                 "path": "Z:\\Regensburg\\_Valid\\ATE-Tools\\FunctionTest\\ES9xx_Manually\\ES93x_Functiontest.exe"
               }
             ],
