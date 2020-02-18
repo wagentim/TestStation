@@ -108,6 +108,20 @@ public class SearchComposite extends Composite
 		sb = new StringBuilder();
 	}
 	
+	@Override
+	public void setEnabled(boolean b)
+	{
+		super.setEnabled(b);
+		if(b)
+		{
+			searchText.setMessage("Search");
+		}
+		else
+		{
+			searchText.setMessage("Disabled");
+		}
+	}
+	
 	protected String filterText(String text)
 	{
 		sb.delete(0, sb.length());
