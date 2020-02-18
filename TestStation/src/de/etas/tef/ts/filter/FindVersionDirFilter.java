@@ -16,7 +16,7 @@ public class FindVersionDirFilter implements IFilter<List<Path>>
 		{
 			Path p = it.next();
 			String name = p.getFileName().toString();
-			if(!name.toLowerCase().startsWith("v"))
+			if(!name.toLowerCase().startsWith("v") || !Character.isDigit(name.charAt(1)))
 			{
 				it.remove();
 			}

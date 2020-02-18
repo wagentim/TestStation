@@ -73,6 +73,8 @@ public class ExeTestProgramScanner extends AbstractScanner<Test>
 		
 		if(exist && Files.isDirectory(startDir))
 		{
+			test.setParentDir(startDir.toString());
+
 			File[] files = new File(startDir.toString()).listFiles();
 			
 			for(File file : files)
@@ -81,9 +83,8 @@ public class ExeTestProgramScanner extends AbstractScanner<Test>
 				
 				String s = IConstants.EMPTY_STRING;
 				
-				if(!Files.isDirectory(p) && (s = p.getFileName().toString().toLowerCase()).endsWith(".exe") && s.startsWith("es"))
+				if(!Files.isDirectory(p) && (s = p.getFileName().toString().toLowerCase()).endsWith(".exe") && (s.startsWith("es") || s.startsWith("test")))
 				{
-					test.setParentDir(startDir.toString());
 					test.setPath(p.toString());
 				}
 			}

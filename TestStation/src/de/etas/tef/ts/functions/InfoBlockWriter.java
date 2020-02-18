@@ -16,8 +16,6 @@ public class InfoBlockWriter implements IActionListener
 {
 	private final StyledText infoBlock;
 	
-	private final StyleRange sr;
-	
 	private final Color red;
 	private final Color black;
 	private final Color blue;
@@ -42,8 +40,6 @@ public class InfoBlockWriter implements IActionListener
 		this.gray = infoBlock.getDisplay().getSystemColor(SWT.COLOR_GRAY);
 		ActionManager.INSTANCE.addActionListener(this);
 		
-		sr = new StyleRange();
-		infoBlock.setStyleRange(sr);
 	}
 	
 	private void moveToLastLine()
@@ -51,53 +47,79 @@ public class InfoBlockWriter implements IActionListener
 		infoBlock.setTopIndex(infoBlock.getLineCount());
 	}
 	
-	private void printLog(Color color, String txt, int style)
-	{
-		infoBlock.getDisplay().asyncExec(new Runnable()
-		{
-			
-			@Override
-			public void run()
-			{
-				sr.start = infoBlock.getText().length();
-				sr.length = txt.length();
-				sr.foreground = color;
-				sr.fontStyle = style;
-				infoBlock.append(txt);
-				moveToLastLine();
-			}
-		});
-		
-	}
-
 	private void logError(String text)
 	{
 		txt = "[" + sdf.format(new Date(System.currentTimeMillis())) + "]" + "[ERROR] " + text + "\n";
-		printLog(red, txt, SWT.ITALIC);
+
+		StyleRange sr = new StyleRange();
+		sr.start = infoBlock.getText().length();
+		sr.length = txt.length();
+		sr.foreground = red;
+		sr.fontStyle = SWT.ITALIC;
+		infoBlock.append(txt);
+		infoBlock.setStyleRange(sr);
+		moveToLastLine();
+//		logOutput.addLog(new Log(text, IConstants.EVENT_LOG_WRITE_ERROR, error));
 	}
 
 	private void logInfoBlue(String text)
 	{
 		txt = "[" + sdf.format(new Date(System.currentTimeMillis())) + "]" + "[INFO] " + text + "\n";
-		printLog(blue, txt, SWT.ITALIC);
+		
+		StyleRange sr = new StyleRange();
+		sr.start = infoBlock.getText().length();
+		sr.length = txt.length();
+		sr.foreground = blue;
+		sr.fontStyle = SWT.NORMAL;
+		infoBlock.append(txt);
+		infoBlock.setStyleRange(sr);
+		moveToLastLine();
+//		logOutput.addLog(new Log(text, IConstants.EVENT_LOG_WRITE_INFO, info));
 	}
 	
 	private void logInfoBlack(String text)
 	{
 		txt = "[" + sdf.format(new Date(System.currentTimeMillis())) + "]" + "[INFO] " + text + "\n";
-		printLog(black, txt, SWT.ITALIC);
+		
+		StyleRange sr = new StyleRange();
+		sr.start = infoBlock.getText().length();
+		sr.length = txt.length();
+		sr.foreground = black;
+		sr.fontStyle = SWT.NORMAL;
+		infoBlock.append(txt);
+		infoBlock.setStyleRange(sr);
+		moveToLastLine();
+//		logOutput.addLog(new Log(text, IConstants.EVENT_LOG_WRITE_WARNING, warning));
 	}
-	
+
 	private void logInfoDarkGreen(String text)
 	{
 		txt = "[" + sdf.format(new Date(System.currentTimeMillis())) + "]" + "[INFO] " + text + "\n";
-		printLog(darkGreen, txt, SWT.ITALIC);
+		
+		StyleRange sr = new StyleRange();
+		sr.start = infoBlock.getText().length();
+		sr.length = txt.length();
+		sr.foreground = darkGreen;
+		sr.fontStyle = SWT.NORMAL;
+		infoBlock.append(txt);
+		infoBlock.setStyleRange(sr);
+		moveToLastLine();
+//		logOutput.addLog(new Log(text, IConstants.EVENT_LOG_WRITE_HINTS, hints));
 	}
 	
 	private void logInfoGray(String text)
 	{
 		txt = "[" + sdf.format(new Date(System.currentTimeMillis())) + "]" + "[INFO] " + text + "\n";
-		printLog(gray, txt, SWT.ITALIC);
+		
+		StyleRange sr = new StyleRange();
+		sr.start = infoBlock.getText().length();
+		sr.length = txt.length();
+		sr.foreground = gray;
+		sr.fontStyle = SWT.NORMAL;
+		infoBlock.append(txt);
+		infoBlock.setStyleRange(sr);
+		moveToLastLine();
+//		logOutput.addLog(new Log(text, IConstants.EVENT_LOG_WRITE_HINTS, hints));
 	}
 	
 

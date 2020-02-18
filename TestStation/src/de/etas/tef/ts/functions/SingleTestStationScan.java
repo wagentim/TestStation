@@ -20,7 +20,7 @@ public class SingleTestStationScan implements Runnable
 		this.startDir = startDir;
 		dirScanner = new DirScanner(startDir);
 		ts = new TestStation();
-		ts.setName(dirScanner.getStartPath().getFileName().toString());
+		ts.setName(dirScanner.getStartPath().getParent().getFileName().toString());
 	}
 	
 	public TestStation getTestStation()

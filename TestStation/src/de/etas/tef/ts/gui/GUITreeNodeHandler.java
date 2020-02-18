@@ -1,6 +1,5 @@
 package de.etas.tef.ts.gui;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
@@ -26,13 +25,14 @@ public class GUITreeNodeHandler implements IActionListener
 	public GUITreeNodeHandler(final Tree tree)
 	{
 		this.tree = tree;
+		ActionManager.INSTANCE.addActionListener(this);
 	}
 	
-	public void updateTree(final List<TestStation> testStations)
+	public void updateStationList(final List<TestStation> stations, String text)
 	{
-		tree.removeAll();
+		Iterator<TestStation> it = stations.iterator();
 		
-		Iterator<TestStation> it = testStations.iterator();
+		tree.setData(stations);
 		
 		while(it.hasNext())
 		{
@@ -44,38 +44,103 @@ public class GUITreeNodeHandler implements IActionListener
 				continue;
 			}
 			
-			TreeItem ti = new TreeItem(tree, SWT.NONE);
-			ti.setText(ts.getName());
-			ti.setData(ts);
-			
-			createTestStationDetail(ts, ti);
+			updateStation(ts, text);
 		}
+		
 	}
 	
-	private void createTestStationDetail(TestStation ts, TreeItem ti)
+	private boolean isProjectAvailableInClusterTest(TestStation ts, String text)
+	{
+		if(text == null || text.isEmpty())
+		{
+			return true;
+		}
+		
+		ClusterTest ct = ts.getClusterTest();
+		
+		if(ct == null)
+		{
+			return true;
+		}
+		
+		for(Project p : ts.getClusterTest().getProjectList())
+		{
+			if(Paths.get(p.getPath()).getFileName().toString().toLowerCase().contains(text.toLowerCase()))
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	private boolean isProjectAvailableInFunctionTest(TestStation ts, String text)
+	{
+		if(text == null || text.isEmpty())
+		{
+			return true;
+		}
+		
+		FunctionTest ft = ts.getFunctionTest();
+		
+		if(ft == null)
+		{
+			return true;
+		}
+		
+		for(Project p : ts.getFunctionTest().getProjectList())
+		{
+			if(Paths.get(p.getPath()).getFileName().toString().toLowerCase().contains(text.toLowerCase()))
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public void updateStation(final TestStation station, String text)
+	{
+		if(!isProjectAvailableInClusterTest(station, text) && isProjectAvailableInFunctionTest(station, text))
+		{
+			return;
+		}
+		
+		TreeItem ti = new TreeItem(tree, SWT.NONE);
+		ti.setText(station.getName());
+		ti.setData(station);
+		
+		createTestStationDetail(station, ti, text);
+		
+		ti.setExpanded(true);
+	}
+	
+	private void createTestStationDetail(TestStation ts, TreeItem ti, String text)
 	{
 		
 		ClusterTest ct = ts.getClusterTest();
 		
-		if(ct != null)
+		if(ct != null && isProjectAvailableInClusterTest(ts, text))
 		{
 			TreeItem t = new TreeItem(ti, SWT.NONE);
 			t.setText("Cluster Test");
 			t.setData(ct);
-			createProjectNode(ct, t);
+			createProjectNode(ct, t, text);
+			t.setExpanded(true);
 		}
 		
 		FunctionTest ft = ts.getFunctionTest();
-		if(ft != null)
+		if(ft != null && isProjectAvailableInFunctionTest(ts, text))
 		{
 			TreeItem t = new TreeItem(ti, SWT.NONE);
 			t.setText("Function Test");
 			t.setData(ft);
-			createProjectNode(ft, t);
+			createProjectNode(ft, t, text);
+			t.setExpanded(true);
 		}
 	}
 
-	private void createProjectNode(AbstractTestProgram ct, TreeItem t)
+	private void createProjectNode(AbstractTestProgram ct, TreeItem t, String text)
 	{
 		List<Project> prjs = ct.getProjects();
 		
@@ -97,6 +162,12 @@ public class GUITreeNodeHandler implements IActionListener
 				continue;
 			}
 			
+			if(text != null && !text.isEmpty() && !Paths.get(p.getPath()).getFileName().toString().toLowerCase().contains(text.toLowerCase()))
+			{
+				ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO_BLUE, "Skip Project: " + p.getPath());
+				continue;
+			}
+			
 			TreeItem ti = new TreeItem(t, SWT.NONE);
 			ti.setText(Paths.get(p.getPath()).getFileName().toString());
 			ti.setData(p);
@@ -115,19 +186,20 @@ public class GUITreeNodeHandler implements IActionListener
 				{
 					Test tst = itTest.next();
 					
-					Path path = Paths.get(tst.getParentDir());
+					String sParentPath = tst.getParentDir();
 					TreeItem tItem = new TreeItem(ti, SWT.NONE);
 					
-					if(path == null)
+					if(sParentPath == null || sParentPath.isEmpty())
 					{
-						path = Paths.get(tst.getPath());
-						if(path == null)
+						String sPath = tst.getPath();
+						
+						if(sPath == null || sPath.isEmpty())
 						{
 							tItem.setText("NOT FOUND");
 						}
 						else
 						{
-							tItem.setText(Paths.get(tst.getPath()).getFileName().toString());
+							tItem.setText(Paths.get(sPath).getFileName().toString());
 						}
 					}
 					else
@@ -135,9 +207,9 @@ public class GUITreeNodeHandler implements IActionListener
 						tItem.setText(Paths.get(tst.getParentDir()).getFileName().toString());
 						TreeItem tIt = new TreeItem(tItem, SWT.NONE);
 						
-						path = Paths.get(tst.getPath());
+						String sPath = tst.getPath();
 						
-						if(path == null)
+						if(sPath == null || sPath.isEmpty())
 						{
 							tIt.setText("NOT FOUND");
 						}
@@ -146,16 +218,42 @@ public class GUITreeNodeHandler implements IActionListener
 							tIt.setText(Paths.get(tst.getPath()).getFileName().toString());
 						}
 					}
-					
 				}
 			}
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void receivedAction(int type, Object content)
 	{
-		
+		if( type == IConstants.EVENT_UPDATE_SEARCH )
+		{
+			String searchText = content.toString();
+			
+			List<TestStation> stations = (List<TestStation>) tree.getData();
+			
+			if(tree.getItemCount() <= 0)
+			{
+				return;
+			}
+			
+			if(stations == null || stations.isEmpty())
+			{
+				TestStation ts = (TestStation) tree.getItem(0).getData();
+				
+				if(ts != null)
+				{
+					tree.removeAll();
+					updateStation(ts, searchText);
+				}
+			}
+			else
+			{
+				tree.removeAll();
+				updateStationList(stations, searchText);
+			}
+		}
 	}
 	
 }

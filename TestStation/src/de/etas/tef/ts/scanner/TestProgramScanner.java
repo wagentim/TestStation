@@ -91,8 +91,6 @@ public class TestProgramScanner implements Runnable
 		
 		Iterator<Path> it = projects.iterator();
 		
-		int i = 0;
-		
 		while(it.hasNext())
 		{
 			Path p = it.next();
@@ -105,7 +103,6 @@ public class TestProgramScanner implements Runnable
 			Project prj = new Project();
 			prj.setPath(p.toString());
 			atp.addProject(prj);
-			i++;
 			scanTests(prj);
 //			ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO, "Project: " + p.getFileName().toString());
 		}
@@ -127,9 +124,12 @@ public class TestProgramScanner implements Runnable
 			exeScanner.removeAllFilters();
 			exeScanner.setStartDir(startDir).setTest(test).startScanning();
 //			ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO, "Path: " + startDir.toString());
-			if( Paths.get(test.getPath()) == null)
+			
+			String s = IConstants.EMPTY_STRING;
+			
+			if( (s = test.getPath()) == null || s.isEmpty())
 			{
-				ActionManager.INSTANCE.sendAction(IConstants.MSG_ERR, "NO EXE File found!");
+				ActionManager.INSTANCE.sendAction(IConstants.MSG_ERR, "NO EXE File found in: " + startDir.toString());
 			}
 			else
 			{
@@ -149,10 +149,10 @@ public class TestProgramScanner implements Runnable
 				exeScanner.removeAllFilters();
 				exeScanner.setStartDir(p).setTest(test).startScanning();
 //				ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO, "Path: " + p.toString());
-				
-				if( Paths.get(test.getPath()) == null)
+				String s = IConstants.EMPTY_STRING;
+				if( (s = test.getPath())== null || s.isEmpty() )
 				{
-					ActionManager.INSTANCE.sendAction(IConstants.MSG_ERR, "NO EXE File found!");
+					ActionManager.INSTANCE.sendAction(IConstants.MSG_ERR, "NO EXE File found in: " + p.toString());
 				}
 				else
 				{

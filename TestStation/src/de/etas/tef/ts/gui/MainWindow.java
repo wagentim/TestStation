@@ -56,19 +56,19 @@ public class MainWindow implements IActionListener
 	private Combo stationList;
 	private Combo scanTypeCombo;
 	private Button run;
+	private Composite c;
+	private SearchComposite search;
 	
 	private static final int INFO_TABLE = 0x00;
 	private static final int INFO_TEXT = 0x01;
 	
 	private GUITreeNodeHandler treeNodeHandler;
-	private InfoBlockWriter writer;
 	
 	public MainWindow(Display display, Controller controller)
 	{
 		ActionManager.INSTANCE.addActionListener(this);
 		this.controller = controller;
 		this.display = display;
-		
 		Shell shell = new Shell(display);
 		shell.setText(IConstants.TXT_TITLE);
 		shell.setImage(controller.getImage(IConstants.IMAGE_TITLE));
@@ -222,6 +222,8 @@ public class MainWindow implements IActionListener
 
 	private void assignStations()
 	{
+		stationList.removeAll();
+		
 		List<TestStation> stations = controller.getTestStations();
 		
 		stationList.add(IConstants.EMPTY_STRING);
@@ -325,12 +327,27 @@ public class MainWindow implements IActionListener
 		
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		mainComposite.setLayoutData(gd);
+
+		
 		
 		sf = new SashForm(mainComposite, SWT.VERTICAL); 
 		gd = new GridData(GridData.FILL_BOTH);
 		sf.setLayoutData(gd);
 		
-		tree = new Tree(sf, SWT.H_SCROLL | SWT.V_SCROLL
+		c = new Composite(sf, SWT.NONE);
+		
+		layout = new GridLayout(1, false);
+		layout.marginTop = layout.marginLeft = layout.marginRight = layout.marginBottom = 0;
+		c.setLayout(layout);
+		c.setBackground(controller.getWhite());
+		
+		gd = new GridData(GridData.FILL_BOTH);
+		c.setLayoutData(gd);
+		
+		search = new SearchComposite(c, SWT.BORDER, controller);
+		search.setEnabled(false);
+
+		tree = new Tree(c, SWT.H_SCROLL | SWT.V_SCROLL
 				| SWT.FULL_SELECTION);
 		gd = new GridData(GridData.FILL_BOTH);
 		tree.setLayoutData(gd);
@@ -345,7 +362,7 @@ public class MainWindow implements IActionListener
 		txtInfoBlock.setEditable(false);
 		txtInfoBlock.setVisible(false);
 		
-		writer = new InfoBlockWriter(txtInfoBlock);
+		new InfoBlockWriter(txtInfoBlock);
 		
 		sf.setWeights(new int[]{1, 0});
 		
@@ -441,6 +458,7 @@ public class MainWindow implements IActionListener
         statusLabel.setVisible(false);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void receivedAction(int type, Object content)
 	{
@@ -454,22 +472,38 @@ public class MainWindow implements IActionListener
 		}
 		else if( type == IConstants.EVENT_UPDATE_DRIVERS )
 		{
-			updateDrivers(null);
+			updateDrivers((List<Driver>) content);
 		}
 		else if( type == IConstants.EVENT_STATION_SELECTED )
 		{
 			TestStation ts = (TestStation)content;
+			
 			if( ts == null )
 			{
-				return;
+				updateStationName(IConstants.EMPTY_STRING);
+				search.clearText();
+				search.setEnabled(true);
+				controller.updateAllStations();
+			}
+			else
+			{
+				updateStationName(ts.getName());
+				search.clearText();
+				search.setEnabled(false);
+				controller.updateSingleStation(ts.getName());
 			}
 			
-			updateStationName(ts.getName());
-			setScanTypeEnable(true);
 		}
 		else if( type == IConstants.EVENT_SCAN_TYPE_CHANGED)
 		{
-			setDiskDriversEnable(true);
+			if(content.toString().equalsIgnoreCase(IConstants.TXT_SCAN_TYPE_TEST_PROGRAM))
+			{
+				setDiskDriversEnable(true);
+			}
+			else
+			{
+				setDiskDriversEnable(false);
+			}
 		}
 		else if( type == IConstants.EVENT_SCAN_TYPE_NULL_SELECTED)
 		{
@@ -479,6 +513,28 @@ public class MainWindow implements IActionListener
 		else if (type == IConstants.EVENT_DISK_SELECTED)
 		{
 			setRunButtonEnable(content == null ? false : true);
+		}
+		else if(type == IConstants.EVENT_UPDATE_TREE)
+		{
+			swithInfoPane(INFO_TABLE);
+			if(content == null)
+			{
+				// do nothing
+			}
+			else if(content instanceof TestStation)
+			{
+				tree.removeAll();
+				treeNodeHandler.updateStation((TestStation)content, IConstants.EMPTY_STRING);
+			}
+			else
+			{
+				tree.removeAll();
+				treeNodeHandler.updateStationList((List<TestStation>) content, IConstants.EMPTY_STRING);
+			}
+		}
+		else if(type == IConstants.EVENT_UPDATE_STATION_LIST)
+		{
+			assignStations();
 		}
 	}
 
@@ -495,6 +551,7 @@ public class MainWindow implements IActionListener
 
 		if(b)
 		{
+			ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO_BLUE, "Scanning Drivers...");
 			display.asyncExec(new Runnable()
 			{
 				
@@ -502,6 +559,7 @@ public class MainWindow implements IActionListener
 				public void run()
 				{
 					controller.updateDrivers();
+					ActionManager.INSTANCE.sendAction(IConstants.MSG_INFO_DARKGREEN, "Scanning Drivers Finished!");
 				}
 			});
 		}
@@ -512,23 +570,18 @@ public class MainWindow implements IActionListener
 		switch(index)
 		{
 			case INFO_TABLE:
-				tree.setVisible(true);
+				c.setVisible(true);
 				txtInfoBlock.setVisible(false);
 				sf.setWeights(new int[]{1, 0});
 				break;
 			case INFO_TEXT:
-				tree.setVisible(false);
+				c.setVisible(false);
 				txtInfoBlock.setVisible(true);
 				sf.setWeights(new int[]{0, 1});
 				break;
 		}
 	}
-
-	private void setScanTypeEnable(boolean b)
-	{
-		scanTypeCombo.setEnabled(b);
-	}
-
+	
 	private void updateDrivers(List<Driver> content)
 	{
 		diskCombo.removeAll();

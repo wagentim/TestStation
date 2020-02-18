@@ -25,6 +25,8 @@ public class ImageRegister
 		mapper.put(IConstants.IMAGE_TITLE, createImage("icons/person.png"));
 		mapper.put(IConstants.IMAGE_EXIT, createImage("icons/exit.png"));
 		mapper.put(IConstants.IMAGE_RUN, createImage("icons/play.png"));
+		mapper.put(IConstants.IMAGE_SEARCH, createImage("icons/search.png"));
+		mapper.put(IConstants.IMAGE_CANCEL, createImage("icons/cancel.png"));
 	}
 	
 	private Image createImage(String path)

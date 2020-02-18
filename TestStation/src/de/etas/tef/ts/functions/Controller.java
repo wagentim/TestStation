@@ -1,5 +1,7 @@
 package de.etas.tef.ts.functions;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Color;
@@ -28,6 +30,7 @@ public class Controller implements IActionListener
 		imageRegister = new ImageRegister(display);
 		colorPicker = new ColorPicker(display);
 		validator = new ConditionValidator();
+		ActionManager.INSTANCE.addActionListener(this);
 	}
 	
 	public Image getImage(int imageIndex)
@@ -107,12 +110,79 @@ public class Controller implements IActionListener
 		switch(validator.validateScanModel(ts == null ? IConstants.EMPTY_STRING : ts.getName(), scanType, selectedDriver == null ? IConstants.EMPTY_STRING : selectedDriver.getLetter()))
 		{
 			case ConditionValidator.ALL_TEST_STATION_SCAN:
-				new AllTestStationScan(selectedDriver.getLetter()).run();
+				AllTestStationScan scanFull = new AllTestStationScan(selectedDriver.getLetter());
+				scanFull.run();
+				List<TestStation> stations = scanFull.getTestStationList();
+				ActionManager.INSTANCE.sendAction(IConstants.EVENT_UPDATE_TREE, stations);
+				configure.setStationList(stations);
+				configure.writeJson();
+				updateAllStations();
+				ActionManager.INSTANCE.sendAction(IConstants.EVENT_UPDATE_STATION_LIST, null);
 				break;
 			case ConditionValidator.SINGLE_TEST_STATION_SCAN:
-				new SingleTestStationScan(selectedDriver.getLetter()).run();
+				SingleTestStationScan scanSing = new SingleTestStationScan(selectedDriver.getLetter());
+				scanSing.run();
+				TestStation ts = scanSing.getTestStation();
+				updateStation(ts);
+				configure.writeJson();
+				updateSingleStation(ts.getName());
 				break;
 		}
+	}
+	
+	public void updateAllStations()
+	{
+		ActionManager.INSTANCE.sendAction(IConstants.EVENT_UPDATE_TREE, configure.getStationList());
+	}
+	
+	public void updateSingleStation(String stationName)
+	{
+		ActionManager.INSTANCE.sendAction(IConstants.EVENT_UPDATE_TREE, findTestStation(stationName));
+	}
+	
+	private TestStation findTestStation(final String name)
+	{
+		TestStation ts = null;
+		Iterator<TestStation> it = getTestStations().iterator();
+		
+		while(it.hasNext())
+		{
+			TestStation tst = it.next();
+			
+			if(name.equalsIgnoreCase(tst.getName()))
+			{
+				ts = tst;
+			}
+		}
+		
+		return ts;
+	}
+	
+	private void updateStation(TestStation ts)
+	{
+		List<TestStation> stations = configure.getStationList();
+		
+		if(null == stations)
+		{
+			stations = new ArrayList<TestStation>();
+		}
+		
+		if(!stations.isEmpty())
+		{
+			Iterator<TestStation> it = stations.iterator();
+			
+			while(it.hasNext())
+			{
+				TestStation tst = it.next();
+				
+				if(tst.getName().equalsIgnoreCase(ts.getName()))
+				{
+					it.remove();
+				}
+			}
+			
+		}
+		stations.add(ts);
 	}
 
 	@Override
